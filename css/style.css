@@ -1,0 +1,33 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.prov h1 {
+    text-align: center;
+    font-size: 3rem;
+    margin-top: 100px;
+}
+
+.climaContenedor {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px 100px;
+}
+
+.climaContenedor div {
+    font-size: 0.7rem;
+    padding: 10px 5px;
+    margin: auto;
+    transition: 0.3s;
+    border-radius: 5px;
+}
+.climaContenedor div:hover {
+    border: 1px solid rgb(236, 236, 236);
+}
+.climaContenedor div h2{
+text-align: center;
+}
