@@ -4,11 +4,55 @@
     box-sizing: border-box;
 }
 
+body {
+    background: #83a1de;
+    background: linear-gradient(90deg, rgba(131, 161, 222, 1) 0%, rgba(52, 124, 207, 1) 49%, rgba(0, 88, 171, 1) 100%);
+}
+
+main {
+    padding-left: 200px;
+}
+
+body header nav {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    padding: 15px;
+    height: 100%;
+    width: 200px;
+    background: rgba(213, 214, 219, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: 0.3s;
+    border: 1px solid transparent;
+}
+
+body header nav:hover {
+    border-right: 1px solid rgb(189, 215, 255);
+}
+
+body header nav img {
+    width: 100%;
+}
+
+body header nav ul {
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+
+body header nav ul li {
+    list-style: none;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+}
 
 .prov h1 {
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
-    margin-top: 100px;
+    padding-top: 100px;
+    color: white;
 }
 
 .climaContenedor {
@@ -16,18 +60,48 @@
     justify-content: center;
     align-items: center;
     margin: 40px 100px;
+    flex-wrap: wrap;
+    -webkit-box-shadow: 4px 6px 15px 5px #004F9C;
+    box-shadow: 4px 6px 15px 5px #004F9C;
+    border-radius: 15px;
+    padding: 20px;
+    transition: 0.5s;
 }
 
-.climaContenedor div {
+.climaContenedor .tempImg {
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 0.7rem;
     padding: 10px 5px;
-    margin: auto;
+    margin: 10px;
     transition: 0.3s;
     border-radius: 5px;
+    color: white;
+    font-weight: 100;
+    border: 1px solid transparent;
+    transition: 0.4s;
 }
-.climaContenedor div:hover {
+
+
+.climaContenedor .tempImg:hover {
     border: 1px solid rgb(236, 236, 236);
 }
-.climaContenedor div h2{
-text-align: center;
+
+.climaContenedor .tempImg span {
+    font-size: 0.7rem;
+}
+
+.climaContenedor .tempImg div {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.climaContenedor .tempImg div i {
+    font-size: 1rem;
+    padding-right: 6px;
+}
+
+.climaContenedor div h2 {
+    text-align: center;
 }
