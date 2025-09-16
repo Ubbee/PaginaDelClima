@@ -42,6 +42,7 @@ body header nav ul {
 }
 
 body header nav ul li {
+    font-size: 1.3rem;
     list-style: none;
     font-family: Arial, Helvetica, sans-serif;
     margin-top: 20px;
@@ -57,7 +58,11 @@ body header nav ul li a {
     text-decoration: none;
 }
 
-#climaContenedor {
+#contenedor{
+    display: grid;
+}
+
+#climaLocalHoy {
     display: flex;
     justify-content: center;
     padding-top: 100px;
@@ -76,6 +81,8 @@ body .prov {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 3rem;
     color: white;
+    border-bottom: 1px solid rgb(164, 164, 255);
+    padding: 5px;
 }
 
 
@@ -84,6 +91,7 @@ body .prov {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
+    padding-top: 10px;
 }
 
 .climas .tempImg {
@@ -122,3 +130,9 @@ body .prov {
 .climas div h2 {
     text-align: center;
 }
+
+/*  grid para hacerlo depues
+        display: grid;
+        grid-template-columns: 7fr 3fr;
+        grid-template-rows: repeat(3, auto);
+*/
