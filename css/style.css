@@ -7,12 +7,17 @@
 body {
     background: #83a1de;
     background: linear-gradient(90deg, rgba(131, 161, 222, 1) 0%, rgba(52, 124, 207, 1) 49%, rgba(0, 88, 171, 1) 100%);
+    font-family: Arial, Helvetica, sans-serif;
 }
 
 main {
     padding-left: 20%;
 }
 
+
+
+
+/* -----------------------HEADER----------------------- */
 body header nav {
     display: flex;
     flex-direction: column;
@@ -58,21 +63,35 @@ body header nav ul li a {
     text-decoration: none;
 }
 
-#contenedor{
+/* ---------------------------------------------------------- */
+
+
+
+
+/* -----------------------CONTENEDOR DE LOS CLIMAS------------------- */
+#contenedor {
     display: grid;
+    grid-template-columns: 8fr 2fr;
+    grid-template-rows: repeat(3, auto);
+    width: 80%;
+    padding-top: 100px;
+    margin: auto;
+    gap: 10px;
 }
 
+/* ---------------------------------------------------------- */
+
+
+/* -----------------------CLIMA DE HOY DIA------------------- */
 #climaLocalHoy {
     display: flex;
     justify-content: center;
-    padding-top: 100px;
+    border-radius: 15px;
+    -webkit-box-shadow: 4px 6px 15px 5px #004F9C;
+    box-shadow: 4px 6px 15px 5px #004F9C;
 }
 
 body .prov {
-    -webkit-box-shadow: 4px 6px 15px 5px #004F9C;
-    box-shadow: 4px 6px 15px 5px #004F9C;
-    width: 50%;
-    border-radius: 15px;
     padding: 25px 50px;
 }
 
@@ -84,8 +103,6 @@ body .prov {
     border-bottom: 1px solid rgb(164, 164, 255);
     padding: 5px;
 }
-
-
 
 .climas {
     display: flex;
@@ -105,7 +122,6 @@ body .prov {
     border: 1px solid transparent;
     transition: 0.4s;
 }
-
 
 .climas .tempImg:hover {
     border: 1px solid rgb(236, 236, 236);
@@ -131,8 +147,43 @@ body .prov {
     text-align: center;
 }
 
-/*  grid para hacerlo depues
-        display: grid;
-        grid-template-columns: 7fr 3fr;
-        grid-template-rows: repeat(3, auto);
-*/
+/* ------------------------------------------------------- */
+
+
+
+
+/* -----------------------CLIMA SEMANAL------------------- */
+#climaLocalSemanal {
+    -webkit-box-shadow: 4px 6px 15px 5px #004F9C;
+    box-shadow: 4px 6px 15px 5px #004F9C;
+    border-radius: 15px;
+    padding: 30px;
+}
+
+.contenedorClimaSemanal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    padding-top: 20px;
+}
+.contenedorClimaSemanal p{
+font-size: 0.8rem;
+}
+.contenedorClimaSemanal h2{
+font-size: 1.1rem;
+}
+
+.tituloSemanal {
+    color: white;
+    text-align: center;
+    border-bottom: 1px solid rgb(164, 164, 255);
+    padding: 5px;
+}
+
+.tituloSemanal h2 {
+    font-size: 1.7rem;
+    font-weight: 600;
+}
+
+/* --------------------------------------------------------- */
