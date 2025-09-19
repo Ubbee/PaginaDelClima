@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                     <i class="wi ${icono}"></i>
                                     <h2><strong></strong> ${climas.temperature_2m[i]}<span> °C</span></h2>
                                     </div>
-                                    <p><strong> ${horaApi.getHours()}:00hs </strong></p>
+                                    <p class="hora"><strong> ${horaApi.getHours()}:00hs </strong></p>
                                     <p><strong> Nubes:</strong> ${climas.cloud_cover[i]}%</p>
                                     <p><strong> Precipitacion:</strong> ${climas.precipitation_probability[i]}%</p>
                                     `
@@ -124,8 +124,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                 console.log(fecha.getDay());
 
                                 climaElementSemanal.innerHTML = `
-                                    <div>
-                                        <div>
+                                    <div class="contenedorClimaIndividual">
+                                        <div class="tituloClimaIndiv">
                                         <i class="wi ${icono}"></i>
                                         <h2>${diasDeSemana[fecha.getDay()]}</h2>
                                         </div>
