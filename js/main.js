@@ -1,8 +1,9 @@
 //API NAME: Open-Meteo
 //LINK: https://open-meteo.com/
 
-const contenedorUno = document.getElementById("climaLocalHoy")
+const contenedorUno = document.getElementById("climaActual")
 const contenedorDos = document.getElementById("climaLocalSemanal")
+const contenedorTres = document.getElementById("climaLocalHoy")
 const weatherMap = {
     0: "wi-day-sunny",
     1: "wi-day-sunny-overcast",
@@ -22,6 +23,15 @@ const weatherMap = {
     95: "wi-thunderstorm",
     96: "wi-storm-showers", 99: "wi-storm-showers"
 };
+const direccionesViento = [
+    "N", "NNE", "NE", "ENE",
+    "E", "ESE", "SE", "SSE",
+    "S", "SSO", "SO", "OSO",
+    "O", "ONO", "NO", "NNO"
+];
+const diasDeSemana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"]
+
+
 
 document.addEventListener("DOMContentLoaded", function () {
     //Aca se usa Geolocalizacion para mostrar el clima en la ubicacion encontrada
@@ -30,9 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
             let latitud = position.coords.latitude
             let longitud = position.coords.longitude
 
-
-            //
-
             fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitud}&longitude=${longitud}&localityLanguage=es`)
                 .then(respuesta => respuesta.json())
                 .then(data => {
@@ -40,13 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
                     const provinciaElement = document.createElement("div")
                     provinciaElement.classList.add(`prov`)
                     provinciaElement.innerHTML = `<h1>${data.principalSubdivision}</h1>`
-                    contenedorUno.appendChild(provinciaElement)
+                    contenedorTres.appendChild(provinciaElement)
 
 
 
 
                     //----------------------------SECCION DE CLIMA DE HOY DIA-------------------------------------
-                    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitud}&longitude=${longitud}&hourly=temperature_2m,weather_code,cloud_cover,visibility,precipitation_probability,wind_speed_10m,apparent_temperature,relative_humidity_2m,precipitation&timezone=auto`)
+                    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitud}&current_weather=true&longitude=${longitud}&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,cloud_cover,visibility,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m,surface_pressure&timezone=auto`)
                         .then(respuesta => respuesta.json())
                         .then(data => {
 
@@ -58,13 +65,17 @@ document.addEventListener("DOMContentLoaded", function () {
                             climaContenedor.classList.add(`climas`)
                             provinciaElement.appendChild(climaContenedor)
 
-                            climas.time.forEach((hora, i) => {
+                            const ahora = new Date()
+                            ahora.setMinutes(0, 0, 0)
 
+                            const fin = new Date(ahora)
+                            fin.setHours(ahora.getHours() + 12)
+
+                            climas.time.forEach((hora, i) => {
                                 const horaApi = new Date(climas.time[i])
-                                const date = new Date()
 
                                 //solo me esta mostrando la temperatura del dia de la fecha
-                                if (horaApi.getHours() >= date.getHours() && horaApi.getDate() === date.getDate() && horaApi.getMonth() === date.getMonth() && date.getFullYear === horaApi.getFullYear) {
+                                if (horaApi >= ahora && horaApi < fin) {
 
                                     //ACA CREAMOS EL DIV QUE CONTIENE LOS DATOS DEL CLIMA
                                     const climaElement = document.createElement("div")
@@ -75,11 +86,12 @@ document.addEventListener("DOMContentLoaded", function () {
                                     climaElement.innerHTML = `
                                     <div>
                                     <i class="wi ${icono}"></i>
-                                    <h2><strong></strong> ${climas.temperature_2m[i]}<span> °C</span></h2>
+                                    <h2> ${climas.temperature_2m[i]}<span> °C</span></h2>
                                     </div>
+                                    <h3>${diasDeSemana[horaApi.getDay()]}</h3>
                                     <p class="hora"><strong> ${horaApi.getHours()}:00hs </strong></p>
-                                    <p><strong> Nubes:</strong> ${climas.cloud_cover[i]}%</p>
-                                    <p><strong> Precipitacion:</strong> ${climas.precipitation_probability[i]}%</p>
+                                    <p> Nubes: ${climas.cloud_cover[i]}%</p>
+                                    <p> Precipitacion: ${climas.precipitation_probability[i]}%</p>
                                     `
 
                                     //ACA LO AGREGAMOS AL CONTENEDOR "climaContenedor"
@@ -95,6 +107,70 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+            fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitud}&longitude=${longitud}&localityLanguage=es`)
+                .then(respuesta => respuesta.json())
+                .then(data => {
+
+                    const provinciaElement = document.createElement("div")
+                    provinciaElement.classList.add(`titulo`)
+                    provinciaElement.innerHTML = `<h1 class="tp">${data.locality}, ${data.principalSubdivision}</h1>`
+                    contenedorUno.appendChild(provinciaElement)
+
+
+
+
+                    //----------------------------SECCION DE CLIMA ACTUAL-------------------------------------
+                    fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitud}&longitude=${longitud}&current=temperature_2m,apparent_temperature,relative_humidity_2m,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,visibility&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,cloud_cover,visibility,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m,surface_pressure,pressure_msl,dew_point_2m,wind_gusts_10m&timezone=auto`)
+                        .then(respuesta => respuesta.json())
+                        .then(data => {
+
+                            const climas = data.current
+                            const fragment = document.createDocumentFragment()
+
+
+                            const date = new Date();
+
+                            const indice = Math.round(climas.wind_direction_10m / 22.5) % 16
+
+                            const horaApi = new Date(climas.time)
+
+                            //solo me esta mostrando la temperatura del dia de la fecha
+                            if (horaApi.toDateString() === date.toDateString() && horaApi.getHours() === date.getHours()) {
+
+                                //ACA CREAMOS EL DIV QUE CONTIENE LOS DATOS DEL CLIMA
+                                const climaElement = document.createElement("div")
+                                climaElement.classList.add("tempImg")
+
+                                let icono = weatherMap[climas.weather_code] || "wi-na"
+
+                                climaElement.innerHTML = `
+                                <div class="infoActual">
+                                    <div class="iconoT">
+                                        <i class="wi ${icono}"></i>
+                                        <h2> ${climas.temperature_2m}<span>°C</span></h2>
+                                    </div>
+                                    <div class="infoParticular">
+                                        <h3>${diasDeSemana[horaApi.getDay()]} ${horaApi.getHours()}:00hs</h3>
+                                        <p><span>Nubes:</span> ${climas.cloud_cover}%</p>
+                                        <p><span>Humedad:</span> ${climas.relative_humidity_2m}%</p>
+                                        <p><span>Viento:</span> ${climas.wind_speed_10m}Km/h (${direccionesViento[indice]})</p>
+                                    </div>
+                                </div>
+                                    `
+
+                                //ACA LO AGREGAMOS AL CONTENEDOR "climaContenedor"
+                                fragment.appendChild(climaElement)
+
+                            }
+
+                            provinciaElement.appendChild(fragment)
+
+                        });
+                });
+
+
+
             //------------------SECCION DE CLIMA SEMANAL----------------------
             fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitud}&longitude=${longitud}&localityLanguage=es`)
                 .then(respuesta => respuesta.json())
@@ -105,14 +181,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     provinciaElement.innerHTML = `<h2>Semana</h2>`
                     contenedorDos.appendChild(provinciaElement)
 
+
+
                     //https://api.open-meteo.com/v1/forecast?latitude=-32.97348864051367&longitude=-68.85284653320433&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&timezone=auto
                     fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitud}&longitude=${longitud}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m&timezone=auto`)
                         .then(respuesta => respuesta.json())
                         .then(data => {
                             const climas = data.daily
                             const fragment = document.createDocumentFragment()
-                            contenedorDos
-                            const diasDeSemana = ["Domingo", "Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado"]
+
+                            const climaContenedorSemanal = document.createElement("div")
+                            climaContenedorSemanal.classList.add("contenedorPrincipalSemanal")
 
                             climas.time.forEach((hora, i) => {
                                 const fecha = new Date(climas.time[i])
@@ -121,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 climaElementSemanal.classList.add("contenedorClimaSemanal")
 
                                 let icono = weatherMap[climas.weather_code[i]] || "wi-na"
-                                console.log(fecha.getDay());
+
 
                                 climaElementSemanal.innerHTML = `
                                     <div class="contenedorClimaIndividual">
@@ -129,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <i class="wi ${icono}"></i>
                                         <h2>${diasDeSemana[fecha.getDay()]}</h2>
                                         </div>
-                                    <p><strong></strong> ${climas.temperature_2m_min[i]}<span>°C</span>  -  <strong></strong> ${climas.temperature_2m_max[i]}<span>°C</span></p>
+                                    <p> ${climas.temperature_2m_min[i]}<span>°C</span> - <strong></strong> ${climas.temperature_2m_max[i]}<span>°C</span></p>
                                     </div>
                                     `
 
@@ -138,7 +217,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
                             })
-                            contenedorDos.appendChild(fragment)
+                            climaContenedorSemanal.appendChild(fragment)
+                            contenedorDos.appendChild(climaContenedorSemanal)
                         })
                 })
             //--------------------------------------------------------------------------------
