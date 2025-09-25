@@ -145,6 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 let icono = weatherMap[climas.weather_code] || "wi-na"
 
                                 climaElement.innerHTML = `
+                                <div class="climaActualContenedor">
                                 <div class="infoActual">
                                     <div class="iconoT">
                                         <i class="wi ${icono}"></i>
@@ -156,6 +157,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <p><span>Humedad:</span> ${climas.relative_humidity_2m}%</p>
                                         <p><span>Viento:</span> ${climas.wind_speed_10m}Km/h (${direccionesViento[indice]})</p>
                                     </div>
+                                </div>
+                                <canvas id="miGrafico"></canvas>
                                 </div>
                                     `
 

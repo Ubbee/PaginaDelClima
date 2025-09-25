@@ -1,7 +1,16 @@
-* {
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+html,
+body {
+    overflow-x: hidden;
+    /* red de seguridad */
 }
 
 body {
@@ -71,18 +80,35 @@ body header nav ul li a {
 #contenedor {
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(3, auto);
-    width: 80%;
-    padding-top: 100px;
-    margin: auto;
+    /* mobile first */
+    width: 90%;
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 100px 16px 16px;
+    /* en vez de padding-top: 100px sin laterales */
     gap: 10px;
+    min-width: 0;
 }
 
-/* <div class="actual"></div>*/
+#contenedor>* {
+    min-width: 0;
+}
 
 /* ---------------------------------------------------------- */
 
+#climaLocalHoy,
+#climaLocalSemanal,
+.contenedorPrincipalSemanal>*,
+.climas>* {
+    min-width: 0;
+}
+
 /* -----------------------CLIMA ACTUAL------------------- */
+.climaActualContenedor {
+    display: flex;
+    flex-wrap: wrap;
+}
+
 #climaActual {
     -webkit-box-shadow: 4px 6px 15px 5px #004F9C;
     box-shadow: 4px 6px 15px 5px #004F9C;
@@ -154,25 +180,26 @@ body header nav ul li a {
     font-size: 3vh;
     color: white;
     text-align: center;
-    margin: 25px 40px 0px;
-    margin-bottom: 10px;
+    padding-top: 20px;
     border-bottom: 1px solid rgb(92, 157, 255);
 }
 
 .contenedorPrincipalSemanal {
     display: grid;
-    padding: 10px;
     grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    padding: 10px;
 }
 
 .contenedorClimaSemanal {
     display: flex;
     color: white;
-    padding: 15px;
+    padding: 10px 25px;
+    margin: 0;
+    width: 100%;
     border: 1px solid transparent;
-    transition: 0.4s;
     border-radius: 5px;
+    transition: 0.4s;
+    min-width: 0;
 }
 
 .contenedorClimaSemanal:hover {
@@ -182,11 +209,13 @@ body header nav ul li a {
 .contenedorClimaSemanal .contenedorClimaIndividual {
     display: flex;
     flex-direction: column;
-    width: 45%;
+    align-items: start;
+    min-width: 0;
 }
 
 .contenedorClimaSemanal .contenedorClimaIndividual p {
     font-size: 1.5vh;
+    margin-top: 3px;
 }
 
 .contenedorClimaSemanal .contenedorClimaIndividual h2 {
@@ -196,10 +225,14 @@ body header nav ul li a {
 .tituloClimaIndiv {
     display: flex;
     align-items: center;
+    min-width: 0;
 }
 
 .tituloClimaIndiv h2 {
     padding-left: 5px;
+    overflow: hidden;
+    /* evita que empuje el borde */
+    text-overflow: ellipsis;
 }
 
 /* ------------------------------------------------------------------*/
@@ -214,7 +247,7 @@ body header nav ul li a {
 }
 
 #climaLocalHoy .prov {
-    padding: 25px 50px;
+    padding: 25px 20px;
 }
 
 .prov h1 {
@@ -227,9 +260,9 @@ body header nav ul li a {
 }
 
 .climas {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
     padding-top: 10px;
 }
 
@@ -237,7 +270,7 @@ body header nav ul li a {
     font-family: Arial, Helvetica, sans-serif;
     font-size: 0.7rem;
     padding: 5px 10px;
-    margin: 10px;
+    margin: 0;
     border-radius: 5px;
     color: white;
     font-weight: 100;
@@ -278,10 +311,25 @@ body header nav ul li a {
 /* --------------------------------------------------------- */
 
 /* Tablet (pantallas medianas, por ejemplo >= 768px) */
+@media (min-width: 650px) {
+    .contenedorPrincipalSemanal {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        gap: 5px;
+    }
+
+    .contenedorClimaSemanal .contenedorClimaIndividual {
+        align-items: center;
+    }
+
+    .climas {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
 @media (min-width: 768px) {
 
     #contenedor {
-        grid-template-columns: 10fr 2fr;
+        grid-template-columns: 9fr 3fr;
         grid-template-rows: repeat(3, auto);
     }
 
@@ -293,11 +341,22 @@ body header nav ul li a {
         grid-column: 2;
         grid-row: span 3
     }
-    .contenedorPrincipalSemanal{
+
+    .contenedorPrincipalSemanal {
         grid-template-columns: 1fr;
     }
 
 }
 
 /* Desktop (pantallas grandes, >= 1024px) */
-@media (min-width: 1024px) {}
+@media (min-width: 1024px) {
+    #contenedor {
+        grid-template-columns: 10fr 2fr;
+    }
+
+    .climas {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+}
