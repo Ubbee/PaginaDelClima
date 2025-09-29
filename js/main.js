@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         .then(data => {
 
                             const climas = data.current
+                            const hourly = data.hourly
                             const fragment = document.createDocumentFragment()
 
 
@@ -146,28 +147,171 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                 climaElement.innerHTML = `
                                 <div class="climaActualContenedor">
-                                <div class="infoActual">
-                                    <div class="iconoT">
-                                        <i class="wi ${icono}"></i>
-                                        <h2> ${climas.temperature_2m}<span>°C</span></h2>
+                                    <div class="infoActual">
+                                        <div class="iconoT">
+                                            <i class="wi ${icono}"></i>
+                                            <h2> ${climas.temperature_2m}<span>°C</span></h2>
+                                        </div>
+                                        <div class="infoParticular">
+                                            <h3>${diasDeSemana[horaApi.getDay()]} ${horaApi.getHours()}:00hs</h3>
+                                            <p><span>Nubes:</span> ${climas.cloud_cover}%</p>
+                                            <p><span>Humedad:</span> ${climas.relative_humidity_2m}%</p>
+                                            <p><span>Viento:</span> ${climas.wind_speed_10m}Km/h (${direccionesViento[indice]})</p>
+                                        </div>
                                     </div>
-                                    <div class="infoParticular">
-                                        <h3>${diasDeSemana[horaApi.getDay()]} ${horaApi.getHours()}:00hs</h3>
-                                        <p><span>Nubes:</span> ${climas.cloud_cover}%</p>
-                                        <p><span>Humedad:</span> ${climas.relative_humidity_2m}%</p>
-                                        <p><span>Viento:</span> ${climas.wind_speed_10m}Km/h (${direccionesViento[indice]})</p>
+                                    <div class="climaChartContenedor">
+                                        <canvas id="climaChart"></canvas>
                                     </div>
-                                </div>
-                                <canvas id="miGrafico"></canvas>
                                 </div>
                                     `
 
                                 //ACA LO AGREGAMOS AL CONTENEDOR "climaContenedor"
                                 fragment.appendChild(climaElement)
 
+
+
+
+                                /* -----------------GRAFICO----------------------- */
+
+                                // Guarda una referencia global para poder destruir el gráfico si lo redibujas
+                                let climaChartRef = null;
+
+                                function indiceHoraMasCercana(hourly) {
+                                    const now = Date.now();
+                                    const timesMs = hourly.time.map(t => new Date(t).getTime());
+                                    return timesMs.reduce((best, t, i) =>
+                                        Math.abs(t - now) < Math.abs(timesMs[best] - now) ? i : best, 0
+                                    );
+                                }
+                                function renderClimaChart(hourly, startIndex = 0, cantidad = 12) {
+                                    // Cortamos 12 horas desde el índice deseado (por ejemplo, la hora más cercana a "ahora")
+                                    const times = hourly.time.slice(startIndex, startIndex + cantidad);
+                                    const temps = hourly.temperature_2m.slice(startIndex, startIndex + cantidad);
+                                    const popsSource = hourly.precipitation_probability ?? Array(hourly.time.length).fill(0);
+                                    const pops = popsSource.slice(startIndex, startIndex + cantidad);
+
+                                    // Etiquetas (hh:mm)
+                                    const labels = times.map(t => {
+                                        const d = new Date(t);
+                                        const hh = String(d.getHours()).padStart(2, "0");
+                                        return `${hh}:00`;
+                                    });
+
+                                    // Config del gráfico
+                                    const ctx = document.getElementById('climaChart').getContext('2d');
+
+                                    // Si ya existe un gráfico previo, lo destruimos para evitar fugas
+                                    if (climaChartRef) {
+                                        climaChartRef.destroy();
+                                    }
+
+                                    climaChartRef = new Chart(ctx, {
+                                        data: {
+                                            labels,
+                                            datasets: [
+                                                // Barras: probabilidad de precipitación
+                                                {
+                                                    type: 'bar',
+                                                    label: 'Prob. lluvia (%)',
+                                                    data: pops,
+                                                    yAxisID: 'y2',
+                                                    backgroundColor: 'rgba(104, 193, 253, 0.55)',
+                                                    borderRadius: 4,
+                                                    barThickness: 'flex'
+                                                },
+                                                // Línea: temperatura
+                                                {
+                                                    type: 'line',
+                                                    label: 'Temperatura (°C)',
+                                                    data: temps,
+                                                    yAxisID: 'y1',
+                                                    borderWidth: 2,
+                                                    tension: 0.35,
+                                                    pointRadius: 3,
+                                                    pointHoverRadius: 5,
+                                                    borderColor: 'rgba(252, 39, 39, 1)',
+                                                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                                    fill: false
+                                                }
+                                            ]
+                                        },
+                                        options: {
+                                            responsive: true,
+                                            maintainAspectRatio: false,
+                                            interaction: { mode: 'index', intersect: false },
+                                            plugins: {
+                                                tooltip: {
+                                                    callbacks: {
+                                                        label: (ctx) => {
+                                                            const v = ctx.parsed.y;
+                                                            return ctx.dataset.yAxisID === 'y1'
+                                                                ? `Temp: ${v} °C`
+                                                                : `Prob. lluvia: ${v}%`;
+                                                        }
+                                                    }
+                                                },
+                                                legend: {
+                                                    labels: {
+                                                        usePointStyle: true,
+                                                        color: '#fff'        // 👉 color blanco para la leyenda
+                                                    }
+                                                }
+                                            },
+                                            scales: {
+                                                x: {
+                                                    grid: { color: '#ffffff33' },    // 👉 líneas de la grilla en blanco (con transparencia)
+                                                    ticks: {
+                                                        color: '#fff',                 // 👉 números del eje X en blanco
+                                                        maxRotation: 0,
+                                                        autoSkip: true
+                                                    }
+                                                },
+                                                y1: {
+                                                    type: 'linear',
+                                                    position: 'left',
+                                                    title: {
+                                                        display: true,
+                                                        text: '°C',
+                                                        color: '#fff'                  // 👉 título del eje Y1 en blanco
+                                                    },
+                                                    ticks: { color: '#fff' },        // 👉 números eje Y1 en blanco
+                                                    grid: { color: '#ffffff33' }     // 👉 grilla en blanco con opacidad
+                                                },
+                                                y2: {
+                                                    type: 'linear',
+                                                    position: 'right',
+                                                    title: {
+                                                        display: true,
+                                                        text: '%',
+                                                        color: '#fff'                  // 👉 título del eje Y2 en blanco
+                                                    },
+                                                    ticks: { color: '#fff' },        // 👉 números eje Y2 en blanco
+                                                    suggestedMin: 0,
+                                                    suggestedMax: 100,
+                                                    grid: { drawOnChartArea: false } // 👉 sin grilla para no duplicar
+                                                }
+                                            }
+                                        }
+
+                                    });
+                                }
+
+                                fragment.appendChild(climaElement);
+                                provinciaElement.appendChild(fragment);   // <-- recién aquí el canvas existe en el DOM
+
+                                // Elegimos el punto de arranque (hora más cercana a ahora) y dibujamos:
+                                const idx = indiceHoraMasCercana(hourly);
+                                renderClimaChart(hourly, idx, 12);
+
+                                /* -------------------------------------------- */
+
+
+
                             }
 
                             provinciaElement.appendChild(fragment)
+
+
 
                         });
                 });
@@ -211,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <i class="wi ${icono}"></i>
                                         <h2>${diasDeSemana[fecha.getDay()]}</h2>
                                         </div>
-                                    <p> ${climas.temperature_2m_min[i]}<span>°C</span> - <strong></strong> ${climas.temperature_2m_max[i]}<span>°C</span></p>
+                                    <p> ${climas.temperature_2m_min[i]}<span>°C</span> / <strong></strong>${climas.temperature_2m_max[i]}<span>°C</span></p>
                                     </div>
                                     `
 
