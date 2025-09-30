@@ -15,9 +15,6 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-
-
-/* ----------- Header lateral ----------- */
 header nav {
   display: flex;
   justify-content: space-between;
@@ -25,37 +22,30 @@ header nav {
   transition: 0.3s;
   border: 1px solid transparent;
 }
-
 header nav img {
   width: 21vh;
 }
-
 header nav .itemsNav {
   display: flex;
 }
-
 header nav .itemsNav li {
   list-style: none;
   font-size: 2.3vh;
   transition: 0.3s;
   margin-right: 15px;
 }
-
 header nav .itemsNav li:hover {
   transform: translateY(1px);
 }
-
 header nav .itemsNav li a {
   color: #fff;
   text-decoration: none;
 }
-
-.redes {
+header nav .redes {
   display: none;
   list-style: none;
 }
 
-/* ----------- Contenedor principal ----------- */
 #contenedor {
   display: grid;
   grid-template-columns: 1fr;
@@ -65,19 +55,13 @@ header nav .itemsNav li a {
   gap: 15px;
   min-width: 0;
 }
-
-#contenedor>*,
-.contenedorPrincipalSemanal>*,
-.climas>* {
+#contenedor > * {
   min-width: 0;
 }
 
-
-/* ----------- Clima actual ----------- */
-.climaActualContenedor {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr 1fr;
+.contenedorPrincipalSemanal > *,
+.climas > * {
+  min-width: 0;
 }
 
 #climaActual {
@@ -86,73 +70,65 @@ header nav .itemsNav li a {
   color: #fff;
   padding: 25px;
 }
-
 #climaActual .titulo .tp {
   font-size: 3.4vh;
   text-align: center;
 }
-
-.infoActual {
+#climaActual .climaActualContenedor {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+#climaActual .infoActual {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
 }
-
-.iconoT {
+#climaActual .infoActual .iconoT {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
-
-.iconoT .wi {
+#climaActual .infoActual .iconoT .wi {
   font-size: 15vh;
 }
-
-.infoActual .iconoT h2 {
+#climaActual .infoActual .iconoT h2 {
   font-size: 7vh;
   font-weight: 100;
 }
-
-.infoActual .iconoT h2 span {
+#climaActual .infoActual .iconoT h2 span {
   font-size: 2.5vh;
   font-weight: 600;
 }
-
-.infoParticular {
+#climaActual .infoActual .infoParticular {
   font-size: 2.5vh;
   font-weight: 100;
 }
-
-.infoParticular h3 {
+#climaActual .infoActual .infoParticular h3 {
   border-bottom: 1px solid rgb(92, 157, 255);
   margin-bottom: 7px;
   font-size: 2vh;
 }
-
-.infoParticular span {
+#climaActual .infoActual .infoParticular span {
   text-decoration: underline;
 }
-
-/* Chart */
-.climaChartContenedor {
+#climaActual .climaChartContenedor {
   width: 100%;
   height: 260px;
 }
-
-#climaChart {
+#climaActual .climaChartContenedor #climaChart {
   width: 100% !important;
   height: 100% !important;
   display: block;
 }
 
-/* ----------- Clima semanal -----------  */
 #climaLocalSemanal {
   box-shadow: 4px 6px 15px 5px #004F9C;
   border-radius: 15px;
+  color: #fff;
 }
-
 #climaLocalSemanal .tituloSemanal h2 {
   font-size: 3vh;
   color: #fff;
@@ -160,14 +136,12 @@ header nav .itemsNav li a {
   padding-top: 20px;
   border-bottom: 1px solid rgb(92, 157, 255);
 }
-
-.contenedorPrincipalSemanal {
+#climaLocalSemanal .contenedorPrincipalSemanal {
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 10px;
 }
-
-.contenedorClimaSemanal {
+#climaLocalSemanal .contenedorClimaSemanal {
   display: flex;
   color: #fff;
   padding: 10px 25px;
@@ -176,67 +150,56 @@ header nav .itemsNav li a {
   transition: 0.4s;
   min-width: 0;
 }
-
-.contenedorClimaSemanal:hover {
+#climaLocalSemanal .contenedorClimaSemanal:hover {
   border: 1px solid rgb(236, 236, 236);
 }
-
-.contenedorClimaSemanal .contenedorClimaIndividual {
+#climaLocalSemanal .contenedorClimaSemanal .contenedorClimaIndividual {
   display: flex;
   flex-direction: column;
   align-items: start;
   min-width: 0;
 }
-
-.contenedorClimaSemanal .contenedorClimaIndividual p {
+#climaLocalSemanal .contenedorClimaSemanal .contenedorClimaIndividual p {
   font-size: 1.5vh;
   margin-top: 3px;
 }
-
-.contenedorClimaSemanal .contenedorClimaIndividual h2 {
+#climaLocalSemanal .contenedorClimaSemanal .contenedorClimaIndividual h2 {
   font-size: 2vh;
 }
-
-.tituloClimaIndiv {
+#climaLocalSemanal .contenedorClimaSemanal .tituloClimaIndiv {
   display: flex;
   align-items: center;
   min-width: 0;
 }
-
-.tituloClimaIndiv h2 {
+#climaLocalSemanal .contenedorClimaSemanal .tituloClimaIndiv h2 {
   padding-left: 5px;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* --------- Clima de hoy (por horas) ----------- */
 #climaLocalHoy {
   display: flex;
   justify-content: center;
   border-radius: 15px;
   box-shadow: 4px 6px 15px 5px #004F9C;
 }
-
 #climaLocalHoy .prov {
   padding: 25px 20px;
 }
-
-.prov h1 {
+#climaLocalHoy .prov h1 {
   text-align: center;
   font-size: 5vh;
   color: #fff;
   border-bottom: 1px solid rgb(92, 157, 255);
   padding: 5px;
 }
-
-.climas {
+#climaLocalHoy .climas {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
   padding-top: 10px;
 }
-
-.climas .tempImg {
+#climaLocalHoy .climas .tempImg {
   font-size: 0.7rem;
   padding: 5px 10px;
   border-radius: 5px;
@@ -245,60 +208,44 @@ header nav .itemsNav li a {
   border: 1px solid transparent;
   transition: 0.4s;
 }
-
-.climas .tempImg:hover {
+#climaLocalHoy .climas .tempImg:hover {
   border: 1px solid rgb(236, 236, 236);
 }
-
-.climas .tempImg div {
+#climaLocalHoy .climas .tempImg div {
   display: flex;
   justify-content: start;
   align-items: center;
   padding-bottom: 10px;
 }
-
-.climas .tempImg div i {
+#climaLocalHoy .climas .tempImg div i {
   font-size: 1rem;
   padding-right: 6px;
 }
-
-.climas .tempImg .hora {
+#climaLocalHoy .climas .tempImg .hora {
   border-bottom: 1px solid #fff;
   margin-bottom: 3px;
   width: 60%;
 }
-
-.climas div h2 {
+#climaLocalHoy .climas div h2 {
   text-align: center;
 }
 
-/* ========== Breakpoints ========== */
-/* Tablet mas pequeñas */
-@media (min-width: 560px) {
-  .climas {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+@media screen and (min-width: 560px) {
+  #climaLocalHoy .climas {
+    grid-template-columns: 1fr 1fr 1fr;
   }
-
-  .contenedorPrincipalSemanal {
+  #climaLocalSemanal .contenedorPrincipalSemanal {
     grid-template-columns: repeat(4, 1fr);
     gap: 5px;
   }
-
-  .contenedorClimaSemanal .contenedorClimaIndividual {
+  #climaLocalSemanal .contenedorClimaSemanal .contenedorClimaIndividual {
     align-items: center;
   }
 }
-
-/* Tablet pequeñas */
 @media (min-width: 650px) {
-  .climas {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
   main {
     padding-left: 25vh;
   }
-
   header nav {
     justify-content: space-between;
     flex-direction: column;
@@ -307,96 +254,78 @@ header nav .itemsNav li a {
     background: #6c98db;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-
   }
-
   header nav:hover {
     border-right: 1px solid rgb(162, 199, 255);
   }
-
   header nav ul {
     align-items: start;
     flex-direction: column;
   }
-
   header nav .itemsNav li {
     margin-top: 20px;
   }
-
   header nav .itemsNav li:hover {
     transform: translateX(3px);
   }
-
-  .redes {
+  header nav .redes {
     display: flex;
     flex-direction: row;
     padding-bottom: 20px;
   }
-
-  .redes li {
-    margin: 0px 6px;
+  header nav .redes li {
+    margin: 0 6px;
+    transition: 0.3s;
   }
-
-  .redes img {
+  header nav .redes li:hover {
+    transform: scale(1.1);
+  }
+  header nav .redes img {
     width: 24px;
   }
 }
-
-/* Tablet */
 @media (min-width: 768px) {
   #contenedor {
     grid-template-columns: 10fr 4fr;
     grid-template-rows: repeat(3, auto);
   }
-
-  .contenedorClimaSemanal .contenedorClimaIndividual {
+  #climaLocalSemanal .contenedorClimaSemanal .contenedorClimaIndividual {
     align-items: start;
   }
-
   #climaLocalSemanal {
     grid-column: 2;
     grid-row: span 3;
   }
-
-  .contenedorPrincipalSemanal {
+  #climaLocalSemanal .contenedorPrincipalSemanal {
     grid-template-columns: 1fr;
   }
-
-  .redes li:hover {
-    transform: scale(1.08);
-  }
-
 }
-
-/* Desktop */
 @media (min-width: 1024px) {
+  #climaLocalHoy .climas {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
   #contenedor {
     grid-template-columns: 10fr 3fr;
     width: 80%;
   }
-
   #climaActual .titulo .tp {
     margin-bottom: 10px;
   }
-
-  .climaActualContenedor {
+  #climaActual .climaActualContenedor {
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
   }
-
-  .climas {
-    grid-template-columns: 1fr 1fr 1fr 1fr;
-  }
 }
-
 @media (min-width: 1200px) {
   #contenedor {
     grid-template-columns: 9fr 2fr;
     width: 80%;
   }
-  .climas {
+  #climaLocalHoy .climas {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
   }
 }
+
+/*# sourceMappingURL=styles.css.map */

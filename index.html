@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons-wind.min.css">
@@ -24,9 +24,12 @@
                 <li><a href="">Contacto</a></li>
             </ul>
             <ul class="redes">
-                <li class="redSocial"><a href="https://www.instagram.com/"><img src="./img/instagram.png" alt="logo Instagram"></a></li>
-                <li class="redSocial"><a href="https://x.com/"><img src="./img/x.png" alt="logo X"></a></li>
-                <li class="redSocial"><a href="https://www.tiktok.com/"><img src="./img/tik-tok.png" alt="logo Tik Tok"></a></li>
+                <li class="redSocial"><a href="https://www.instagram.com/" target="_blank"><img
+                            src="./img/instagram.png" alt="logo Instagram"></a></li>
+                <li class="redSocial"><a href="https://x.com/" target="_blank"><img src="./img/x.png" alt="logo X"></a>
+                </li>
+                <li class="redSocial"><a href="https://www.tiktok.com/" target="_blank"><img src="./img/tik-tok.png"
+                            alt="logo Tik Tok"></a></li>
             </ul>
         </nav>
     </header>
@@ -44,3 +47,328 @@
 </body>
 
 </html>
+
+<!-- 
+<body>
+    <header>
+
+        <nav>
+            <a href="#"><img src="./img/logo.png" alt="logo de la pagina"></a>
+            <ul class="itemsNav">
+                <li><a href="">Inicio</a></li>
+                <li><a href="">Informacion</a></li>
+                <li><a href="">Contacto</a></li>
+            </ul>
+            <ul class="redes">
+                <li class="redSocial"><a href="https://www.instagram.com/" target="_blank"><img
+                            src="./img/instagram.png" alt="logo Instagram"></a></li>
+                <li class="redSocial"><a href="https://x.com/" target="_blank"><img src="./img/x.png" alt="logo X"></a>
+                </li>
+                <li class="redSocial"><a href="https://www.tiktok.com/" target="_blank"><img src="./img/tik-tok.png"
+                            alt="logo Tik Tok"></a></li>
+            </ul>
+        </nav>
+    </header>
+
+
+
+
+
+
+
+
+
+    <main>
+        <section id="contenedor">
+            <div id="climaActual">
+                <div class="titulo">
+                    <h1 class="tp">Carrodilla, Mendoza</h1>
+                    <div class="tempImg">
+                        <div class="climaActualContenedor">
+                            <div class="infoActual">
+                                <div class="iconoT">
+                                    <i class="wi wi-day-cloudy"></i>
+                                    <h2> 15.7<span>°C</span></h2>
+                                </div>
+                                <div class="infoParticular">
+                                    <h3>Miercoles 11:00hs</h3>
+                                    <p><span>Nubes:</span> 62%</p>
+                                    <p><span>Humedad:</span> 52%</p>
+                                    <p><span>Viento:</span> 11.7Km/h (E)</p>
+                                </div>
+                            </div>
+                            <div class="climaChartContenedor">
+                                <canvas id="climaChart" width="910" height="520"
+                                    style="display: block; box-sizing: border-box; height: 260px; width: 455px;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+-------------------------------------------------------------------------------------
+
+
+            <div id="climaLocalSemanal">
+                <div class="tituloSemanal">
+                    <h2>Semana</h2>
+                </div>
+                <div class="contenedorPrincipalSemanal">
+                    <div class="contenedorClimaSemanal">
+                        <div class="contenedorClimaIndividual">
+                            <div class="tituloClimaIndiv">
+                                <i class="wi wi-thunderstorm"></i>
+                                <h2>Martes</h2>
+                            </div>
+                            <p> 10.7<span>°C</span> / <strong></strong>17.8<span>°C</span></p>
+                        </div>
+                    </div>
+                    <div class="contenedorClimaSemanal">
+                        <div class="contenedorClimaIndividual">
+                            <div class="tituloClimaIndiv">
+                                <i class="wi wi-cloudy"></i>
+                                <h2>Miercoles</h2>
+                            </div>
+                            <p> 9.8<span>°C</span> / <strong></strong>19.5<span>°C</span></p>
+                        </div>
+                    </div>
+                    <div class="contenedorClimaSemanal">
+                        <div class="contenedorClimaIndividual">
+                            <div class="tituloClimaIndiv">
+                                <i class="wi wi-cloudy"></i>
+                                <h2>Jueves</h2>
+                            </div>
+                            <p> 11.3<span>°C</span> / <strong></strong>24.1<span>°C</span></p>
+                        </div>
+                    </div>
+                    <div class="contenedorClimaSemanal">
+                        <div class="contenedorClimaIndividual">
+                            <div class="tituloClimaIndiv">
+                                <i class="wi wi-cloudy"></i>
+                                <h2>Viernes</h2>
+                            </div>
+                            <p> 13.4<span>°C</span> / <strong></strong>25.8<span>°C</span></p>
+                        </div>
+                    </div>
+                    <div class="contenedorClimaSemanal">
+                        <div class="contenedorClimaIndividual">
+                            <div class="tituloClimaIndiv">
+                                <i class="wi wi-day-cloudy"></i>
+                                <h2>Sabado</h2>
+                            </div>
+                            <p> 14.2<span>°C</span> / <strong></strong>26.2<span>°C</span></p>
+                        </div>
+                    </div>
+                    <div class="contenedorClimaSemanal">
+                        <div class="contenedorClimaIndividual">
+                            <div class="tituloClimaIndiv">
+                                <i class="wi wi-rain"></i>
+                                <h2>Domingo</h2>
+                            </div>
+                            <p> 4.9<span>°C</span> / <strong></strong>13.2<span>°C</span></p>
+                        </div>
+                    </div>
+                    <div class="contenedorClimaSemanal">
+                        <div class="contenedorClimaIndividual">
+                            <div class="tituloClimaIndiv">
+                                <i class="wi wi-day-sunny-overcast"></i>
+                                <h2>Lunes</h2>
+                            </div>
+                            <p> 5<span>°C</span> / <strong></strong>17.2<span>°C</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+-------------------------------------------------------------------------------------
+
+
+
+            <div id="climaLocalHoy">
+                <div class="prov">
+                    <h1>Mendoza</h1>
+                    <div class="climas">
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-day-cloudy"></i>
+                                <h2> 14.8<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 11:00hs </strong></p>
+                            <p> Nubes: 62%</p>
+                            <p> Precipitacion: 13%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-day-cloudy"></i>
+                                <h2> 16.2<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 12:00hs </strong></p>
+                            <p> Nubes: 58%</p>
+                            <p> Precipitacion: 3%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 16.8<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 13:00hs </strong></p>
+                            <p> Nubes: 93%</p>
+                            <p> Precipitacion: 3%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 17.3<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 14:00hs </strong></p>
+                            <p> Nubes: 94%</p>
+                            <p> Precipitacion: 8%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 17.8<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 15:00hs </strong></p>
+                            <p> Nubes: 83%</p>
+                            <p> Precipitacion: 3%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 17.5<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 16:00hs </strong></p>
+                            <p> Nubes: 100%</p>
+                            <p> Precipitacion: 5%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 17.2<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 17:00hs </strong></p>
+                            <p> Nubes: 100%</p>
+                            <p> Precipitacion: 10%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 17<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 18:00hs </strong></p>
+                            <p> Nubes: 100%</p>
+                            <p> Precipitacion: 8%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 16.7<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 19:00hs </strong></p>
+                            <p> Nubes: 100%</p>
+                            <p> Precipitacion: 5%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 16<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 20:00hs </strong></p>
+                            <p> Nubes: 100%</p>
+                            <p> Precipitacion: 10%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 14.9<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 21:00hs </strong></p>
+                            <p> Nubes: 100%</p>
+                            <p> Precipitacion: 5%</p>
+                        </div>
+                        <div class="tempImg">
+                            <div>
+                                <i class="wi wi-cloudy"></i>
+                                <h2> 14.5<span> °C</span></h2>
+                            </div>
+                            <h3>Miercoles</h3>
+                            <p class="hora"><strong> 22:00hs </strong></p>
+                            <p> Nubes: 100%</p>
+                            <p> Precipitacion: 3%</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="./js/main.js"></script>
+    <!-- Code injected by live-server -->
+<script>
+    // <![CDATA[  <-- For SVG support
+    if ('WebSocket' in window) {
+        (function () {
+            function refreshCSS() {
+                var sheets = [].slice.call(document.getElementsByTagName("link"));
+                var head = document.getElementsByTagName("head")[0];
+                for (var i = 0; i < sheets.length; ++i) {
+                    var elem = sheets[i];
+                    var parent = elem.parentElement || head;
+                    parent.removeChild(elem);
+                    var rel = elem.rel;
+                    if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+                        var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+                        elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+                    }
+                    parent.appendChild(elem);
+                }
+            }
+            var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+            var address = protocol + window.location.host + window.location.pathname + '/ws';
+            var socket = new WebSocket(address);
+            socket.onmessage = function (msg) {
+                if (msg.data == 'reload') window.location.reload();
+                else if (msg.data == 'refreshcss') refreshCSS();
+            };
+            if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+                console.log('Live reload enabled.');
+                sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+            }
+        })();
+    }
+    else {
+        console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+    }
+    // ]]>
+</script>
+
+
+
+
+</body>
+
+
+
+
+
+
+
+
+
+-->
