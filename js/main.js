@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                                 /* -----------------GRAFICO----------------------- */
 
-                                // Guarda una referencia global para poder destruir el gráfico si lo redibujas
+                                // se guarda una referencia global para poder destruir el gráfico si se redibuja
                                 let climaChartRef = null;
 
                                 function indiceHoraMasCercana(hourly) {
@@ -184,13 +184,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                     );
                                 }
                                 function renderClimaChart(hourly, startIndex = 0, cantidad = 12) {
-                                    // Cortamos 12 horas desde el índice deseado (por ejemplo, la hora más cercana a "ahora")
+                                    // Cortamos 12 horas desde el índice que queremos
                                     const times = hourly.time.slice(startIndex, startIndex + cantidad);
                                     const temps = hourly.temperature_2m.slice(startIndex, startIndex + cantidad);
                                     const popsSource = hourly.precipitation_probability ?? Array(hourly.time.length).fill(0);
                                     const pops = popsSource.slice(startIndex, startIndex + cantidad);
 
-                                    // Etiquetas (hh:mm)
+                                    // Etiquetas
                                     const labels = times.map(t => {
                                         const d = new Date(t);
                                         const hh = String(d.getHours()).padStart(2, "0");
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         data: {
                                             labels,
                                             datasets: [
-                                                // Barras: probabilidad de precipitación
+                                                // Barras - probabilidad de precipitación
                                                 {
                                                     type: 'bar',
                                                     label: 'Prob. lluvia (%)',
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     borderRadius: 4,
                                                     barThickness: 'flex'
                                                 },
-                                                // Línea: temperatura
+                                                // Línea - temperatura
                                                 {
                                                     type: 'line',
                                                     label: 'Temperatura (°C)',
@@ -253,15 +253,15 @@ document.addEventListener("DOMContentLoaded", function () {
                                                 legend: {
                                                     labels: {
                                                         usePointStyle: true,
-                                                        color: '#fff'        // 👉 color blanco para la leyenda
+                                                        color: '#fff'        
                                                     }
                                                 }
                                             },
                                             scales: {
                                                 x: {
-                                                    grid: { color: '#ffffff33' },    // 👉 líneas de la grilla en blanco (con transparencia)
+                                                    grid: { color: '#ffffff33' },    
                                                     ticks: {
-                                                        color: '#fff',                 // 👉 números del eje X en blanco
+                                                        color: '#fff',                 
                                                         maxRotation: 0,
                                                         autoSkip: true
                                                     }
@@ -272,10 +272,10 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     title: {
                                                         display: true,
                                                         text: '°C',
-                                                        color: '#fff'                  // 👉 título del eje Y1 en blanco
+                                                        color: '#fff'                  
                                                     },
-                                                    ticks: { color: '#fff' },        // 👉 números eje Y1 en blanco
-                                                    grid: { color: '#ffffff33' }     // 👉 grilla en blanco con opacidad
+                                                    ticks: { color: '#fff' },        
+                                                    grid: { color: '#ffffff33' }    
                                                 },
                                                 y2: {
                                                     type: 'linear',
@@ -283,12 +283,12 @@ document.addEventListener("DOMContentLoaded", function () {
                                                     title: {
                                                         display: true,
                                                         text: '%',
-                                                        color: '#fff'                  // 👉 título del eje Y2 en blanco
+                                                        color: '#fff'                  
                                                     },
-                                                    ticks: { color: '#fff' },        // 👉 números eje Y2 en blanco
+                                                    ticks: { color: '#fff' },        
                                                     suggestedMin: 0,
                                                     suggestedMax: 100,
-                                                    grid: { drawOnChartArea: false } // 👉 sin grilla para no duplicar
+                                                    grid: { drawOnChartArea: false } 
                                                 }
                                             }
                                         }
@@ -297,9 +297,8 @@ document.addEventListener("DOMContentLoaded", function () {
                                 }
 
                                 fragment.appendChild(climaElement);
-                                provinciaElement.appendChild(fragment);   // <-- recién aquí el canvas existe en el DOM
+                                provinciaElement.appendChild(fragment);
 
-                                // Elegimos el punto de arranque (hora más cercana a ahora) y dibujamos:
                                 const idx = indiceHoraMasCercana(hourly);
                                 renderClimaChart(hourly, idx, 12);
 
@@ -330,7 +329,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-                    //https://api.open-meteo.com/v1/forecast?latitude=-32.97348864051367&longitude=-68.85284653320433&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m,weather_code&timezone=auto
+                    
                     fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitud}&longitude=${longitud}&daily=weather_code,temperature_2m_max,temperature_2m_min&hourly=temperature_2m&timezone=auto`)
                         .then(respuesta => respuesta.json())
                         .then(data => {
@@ -385,7 +384,7 @@ document.addEventListener("DOMContentLoaded", function () {
             provinciaElement.innerHTML = `<h1>Mendoza</h1>`;
             contenedorUno.appendChild(provinciaElement);
 
-            // Aca mostramos el clima del dia en sus direnetes horarios
+            // Aca mostramos el clima del dia en sus diferentes horarios
             fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&hourly=temperature_2m,weather_code,cloud_cover,precipitation_probability&timezone=auto`)
                 .then(res => res.json())
                 .then(data => {
