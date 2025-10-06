@@ -46,7 +46,7 @@ body {
 // Header
 // ----------------------------------------------------------------------
 header {
-    nav {
+    /* nav {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -83,7 +83,76 @@ header {
             display: none;
             list-style: none;
         }
+
+    } */
+
+    .navv {
+
+        a {
+            img {
+                width: 21vh;
+            }
+        }
+
+        .navbar-toggler {
+            border-color: #fff;
+            margin-right: 4%;
+
+            .navbar-toggler-icon {
+                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+            }
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        #navbarContenido {
+            position: absolute;
+            top: 68%;
+            right: 2.5%;
+            background-color: #1667BA;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            height: 150px;
+
+            ul {
+                li {
+                    a {
+                        color: white;
+                    }
+
+                    padding: 5px 15px;
+                    transition: 0.4s;
+
+                    &:last-child {
+                        border-bottom-left-radius: 10px;
+                        border-bottom-right-radius: 10px;
+                    }
+                }
+
+                li:hover {
+                    background-color: #64a8f1;
+
+                    a:hover {
+                        color: #1667BA;
+                    }
+                }
+            }
+        }
+
+        // Redes
+        .redes {
+            display: none;
+            list-style: none;
+        }
     }
+
+
 }
 
 // ----------------------------------------------------------------------
@@ -164,9 +233,15 @@ header {
                 font-size: 2vh;
             }
 
-            span {
-                text-decoration: underline;
+            p {
+                margin: 2px 0;
+
+                span {
+                    text-decoration: underline;
+                }
             }
+
+
         }
     }
 
@@ -199,14 +274,13 @@ header {
 
     .contenedorPrincipalSemanal {
         display: grid;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
         padding: 10px;
     }
 
     .contenedorClimaSemanal {
         display: flex;
         color: $text;
-        padding: 10px 25px;
         border: 1px solid transparent;
         border-radius: 5px;
         transition: .4s;
@@ -219,7 +293,7 @@ header {
         .contenedorClimaIndividual {
             display: flex;
             flex-direction: column;
-            align-items: start;
+            padding: 5px 10px;
             @include grid-minwidth-fix;
 
             p {
@@ -274,8 +348,8 @@ header {
         padding-top: 10px;
 
         .tempImg {
-            font-size: .7rem;
-            padding: 5px 10px;
+            font-size: 1rem;
+            padding: 10px;
             border-radius: 5px;
             color: $text;
             font-weight: 100;
@@ -286,16 +360,25 @@ header {
                 border: 1px solid rgb(236, 236, 236);
             }
 
-            div {
+            .tituloItem {
                 display: flex;
                 justify-content: start;
                 align-items: center;
                 padding-bottom: 10px;
 
+                h2 {
+                    text-align: center;
+                    font-size: 1.5rem;
+                }
+
                 i {
-                    font-size: 1rem;
+                    font-size: 4vh;
                     padding-right: 6px;
                 }
+            }
+
+            h3 {
+                font-size: 1.2rem;
             }
 
             .hora {
@@ -303,10 +386,12 @@ header {
                 margin-bottom: 3px;
                 width: 60%;
             }
-        }
 
-        div h2 {
-            text-align: center;
+            p {
+                padding: 0;
+                margin: 0;
+            }
+
         }
     }
 }
@@ -342,50 +427,95 @@ header {
         padding-left: 25vh;
     }
 
+    #climaLocalHoy {
+        .climas {
+            .tempImg {
+                .tituloItem {
+
+                    h2 {
+                        font-size: 2.6vh;
+                    }
+                }
+            }
+        }
+    }
+
     header {
-        nav {
-            justify-content: space-between;
-            flex-direction: column;
+        .navv {
+            width: 25vh;
             position: fixed;
             height: 100vh;
             background: #6c98db;
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
 
+
             &:hover {
                 border-right: 1px solid rgb(162, 199, 255);
             }
 
-            ul {
-                align-items: start;
-                flex-direction: column;
-            }
-
-            .itemsNav li {
-                margin-top: 20px;
-
-                &:hover {
-                    transform: translateX(3px);
-                }
-            }
-
-            .redes {
+            .cont {
                 display: flex;
-                flex-direction: row;
-                padding-bottom: 20px;
+                align-items: center;
+                height: 100vh;
+                justify-content: space-between;
 
-                li {
-                    margin: 0 6px;
-                    transition: 0.3s;
+                .boton {
+                    display: none;
                 }
 
-                li:hover {
+                #navbarContenido {
+                    display: block;
+                    background-color: transparent;
+                    position: relative;
+                    width: max-content;
+                    box-shadow: none;
+                    top: auto;
+                    right: auto;
+
+                    ul {
+                        flex-direction: column;
+
+                        li {
+                            &:hover {
+                                transform: translateX(3px);
+                                background-color: transparent;
+
+                                a {
+                                    color: white;
+                                }
+                            }
+
+                        }
+                    }
+
+                }
+
+                .redes {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    gap: 12px;
+                    padding: 8px 0;
+                    margin: 0;
+                    list-style: none;
+                    width: 100%;
+                }
+
+                .redes li {
+                    margin: 0;
+                    transition: .3s;
+                }
+
+                .redes li:hover {
                     transform: scale(1.1);
                 }
 
-                img {
+                .redes img {
                     width: 24px;
+                    display: block;
                 }
+
             }
         }
     }
@@ -393,6 +523,11 @@ header {
 
 // Tablet
 @media (min-width: 768px) {
+    header {
+        .navv {
+            flex-direction: column;
+        }
+    }
 
     #contenedor {
         grid-template-columns: 10fr 4fr;
@@ -409,6 +544,19 @@ header {
 
         .contenedorPrincipalSemanal {
             grid-template-columns: 1fr;
+        }
+    }
+
+    #climaLocalHoy {
+        .climas {
+            .tempImg {
+                .tituloItem {
+
+                    h2 {
+                        font-size: 3vh;
+                    }
+                }
+            }
         }
     }
 }

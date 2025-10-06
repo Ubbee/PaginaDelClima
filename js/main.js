@@ -84,14 +84,15 @@ document.addEventListener("DOMContentLoaded", function () {
                                     let icono = weatherMap[climas.weather_code[i]] || "wi-na"
 
                                     climaElement.innerHTML = `
-                                    <div>
-                                    <i class="wi ${icono}"></i>
-                                    <h2> ${climas.temperature_2m[i]}<span> °C</span></h2>
+                                    <div class="tituloItem">
+                                        <i class="wi ${icono}"></i>
+                                        <h2> ${climas.temperature_2m[i]}<span> °C</span></h2>
                                     </div>
                                     <h3>${diasDeSemana[horaApi.getDay()]}</h3>
                                     <p class="hora"><strong> ${horaApi.getHours()}:00hs </strong></p>
                                     <p> Nubes: ${climas.cloud_cover[i]}%</p>
                                     <p> Precipitacion: ${climas.precipitation_probability[i]}%</p>
+                                    <p> <i class="wi wi-strong-wind"></i> ${climas.wind_speed_10m[i]}km/h - ${climas.wind_direction_10m[i]}°</p>
                                     `
 
                                     //ACA LO AGREGAMOS AL CONTENEDOR "climaContenedor"
@@ -354,7 +355,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         <i class="wi ${icono}"></i>
                                         <h2>${diasDeSemana[fecha.getDay()]}</h2>
                                         </div>
-                                    <p> ${climas.temperature_2m_min[i]}<span>°C</span> / <strong></strong>${climas.temperature_2m_max[i]}<span>°C</span></p>
+                                        <p> ${climas.temperature_2m_min[i]}<span>°C</span> / <strong></strong>${climas.temperature_2m_max[i]}<span>°C</span></p>
                                     </div>
                                     `
 

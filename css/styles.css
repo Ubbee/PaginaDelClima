@@ -1,3 +1,4 @@
+@charset "UTF-8";
 *,
 *::before,
 *::after {
@@ -15,33 +16,91 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-header nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: 0.3s;
-  border: 1px solid transparent;
+header {
+  /* nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: .3s;
+      border: 1px solid transparent;
+
+      img {
+          width: 21vh;
+      }
+
+      // Menú principal
+      .itemsNav {
+          display: flex;
+
+          li {
+              list-style: none;
+              font-size: 2.3vh;
+              transition: .3s;
+              margin-right: 15px;
+
+              &:hover {
+                  transform: translateY(1px);
+              }
+
+              a {
+                  color: $text;
+                  text-decoration: none;
+              }
+          }
+      }
+
+      // Redes
+      .redes {
+          display: none;
+          list-style: none;
+      }
+
+  } */
 }
-header nav img {
+header .navv a img {
   width: 21vh;
 }
-header nav .itemsNav {
-  display: flex;
+header .navv .navbar-toggler {
+  border-color: #fff;
+  margin-right: 4%;
 }
-header nav .itemsNav li {
-  list-style: none;
-  font-size: 2.3vh;
-  transition: 0.3s;
-  margin-right: 15px;
+header .navv .navbar-toggler .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
 }
-header nav .itemsNav li:hover {
-  transform: translateY(1px);
+header .navv .navbar-toggler:focus {
+  box-shadow: none;
 }
-header nav .itemsNav li a {
-  color: #fff;
-  text-decoration: none;
+header .navv #navbarContenido {
+  position: absolute;
+  top: 68%;
+  right: 2.5%;
+  background-color: #1667BA;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  height: 150px;
 }
-header nav .redes {
+header .navv #navbarContenido ul li a {
+  color: white;
+}
+header .navv #navbarContenido ul li {
+  padding: 5px 15px;
+  transition: 0.4s;
+}
+header .navv #navbarContenido ul li:last-child {
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+header .navv #navbarContenido ul li:hover {
+  background-color: #64a8f1;
+}
+header .navv #navbarContenido ul li:hover a:hover {
+  color: #1667BA;
+}
+header .navv .redes {
   display: none;
   list-style: none;
 }
@@ -111,7 +170,10 @@ header nav .redes {
   margin-bottom: 7px;
   font-size: 2vh;
 }
-#climaActual .infoActual .infoParticular span {
+#climaActual .infoActual .infoParticular p {
+  margin: 2px 0;
+}
+#climaActual .infoActual .infoParticular p span {
   text-decoration: underline;
 }
 #climaActual .climaChartContenedor {
@@ -138,13 +200,12 @@ header nav .redes {
 }
 #climaLocalSemanal .contenedorPrincipalSemanal {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 10px;
 }
 #climaLocalSemanal .contenedorClimaSemanal {
   display: flex;
   color: #fff;
-  padding: 10px 25px;
   border: 1px solid transparent;
   border-radius: 5px;
   transition: 0.4s;
@@ -156,7 +217,7 @@ header nav .redes {
 #climaLocalSemanal .contenedorClimaSemanal .contenedorClimaIndividual {
   display: flex;
   flex-direction: column;
-  align-items: start;
+  padding: 5px 10px;
   min-width: 0;
 }
 #climaLocalSemanal .contenedorClimaSemanal .contenedorClimaIndividual p {
@@ -200,8 +261,8 @@ header nav .redes {
   padding-top: 10px;
 }
 #climaLocalHoy .climas .tempImg {
-  font-size: 0.7rem;
-  padding: 5px 10px;
+  font-size: 1rem;
+  padding: 10px;
   border-radius: 5px;
   color: #fff;
   font-weight: 100;
@@ -211,23 +272,31 @@ header nav .redes {
 #climaLocalHoy .climas .tempImg:hover {
   border: 1px solid rgb(236, 236, 236);
 }
-#climaLocalHoy .climas .tempImg div {
+#climaLocalHoy .climas .tempImg .tituloItem {
   display: flex;
   justify-content: start;
   align-items: center;
   padding-bottom: 10px;
 }
-#climaLocalHoy .climas .tempImg div i {
-  font-size: 1rem;
+#climaLocalHoy .climas .tempImg .tituloItem h2 {
+  text-align: center;
+  font-size: 1.5rem;
+}
+#climaLocalHoy .climas .tempImg .tituloItem i {
+  font-size: 4vh;
   padding-right: 6px;
+}
+#climaLocalHoy .climas .tempImg h3 {
+  font-size: 1.2rem;
 }
 #climaLocalHoy .climas .tempImg .hora {
   border-bottom: 1px solid #fff;
   margin-bottom: 3px;
   width: 60%;
 }
-#climaLocalHoy .climas div h2 {
-  text-align: center;
+#climaLocalHoy .climas .tempImg p {
+  padding: 0;
+  margin: 0;
 }
 
 @media screen and (min-width: 560px) {
@@ -246,45 +315,74 @@ header nav .redes {
   main {
     padding-left: 25vh;
   }
-  header nav {
-    justify-content: space-between;
-    flex-direction: column;
+  #climaLocalHoy .climas .tempImg .tituloItem h2 {
+    font-size: 2.6vh;
+  }
+  header .navv {
+    width: 25vh;
     position: fixed;
     height: 100vh;
     background: #6c98db;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
   }
-  header nav:hover {
+  header .navv:hover {
     border-right: 1px solid rgb(162, 199, 255);
   }
-  header nav ul {
-    align-items: start;
+  header .navv .cont {
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    justify-content: space-between;
+  }
+  header .navv .cont .boton {
+    display: none;
+  }
+  header .navv .cont #navbarContenido {
+    display: block;
+    background-color: transparent;
+    position: relative;
+    width: max-content;
+    box-shadow: none;
+    top: auto;
+    right: auto;
+  }
+  header .navv .cont #navbarContenido ul {
     flex-direction: column;
   }
-  header nav .itemsNav li {
-    margin-top: 20px;
-  }
-  header nav .itemsNav li:hover {
+  header .navv .cont #navbarContenido ul li:hover {
     transform: translateX(3px);
+    background-color: transparent;
   }
-  header nav .redes {
+  header .navv .cont #navbarContenido ul li:hover a {
+    color: white;
+  }
+  header .navv .cont .redes {
     display: flex;
-    flex-direction: row;
-    padding-bottom: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+    margin: 0;
+    list-style: none;
+    width: 100%;
   }
-  header nav .redes li {
-    margin: 0 6px;
+  header .navv .cont .redes li {
+    margin: 0;
     transition: 0.3s;
   }
-  header nav .redes li:hover {
+  header .navv .cont .redes li:hover {
     transform: scale(1.1);
   }
-  header nav .redes img {
+  header .navv .cont .redes img {
     width: 24px;
+    display: block;
   }
 }
 @media (min-width: 768px) {
+  header .navv {
+    flex-direction: column;
+  }
   #contenedor {
     grid-template-columns: 10fr 4fr;
     grid-template-rows: repeat(3, auto);
@@ -298,6 +396,9 @@ header nav .redes {
   }
   #climaLocalSemanal .contenedorPrincipalSemanal {
     grid-template-columns: 1fr;
+  }
+  #climaLocalHoy .climas .tempImg .tituloItem h2 {
+    font-size: 3vh;
   }
 }
 @media (min-width: 1024px) {
