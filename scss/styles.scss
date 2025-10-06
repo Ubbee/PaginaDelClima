@@ -1,6 +1,4 @@
-// ----------------------------------------------------------------------
-// Variables
-// ----------------------------------------------------------------------
+
 $bg-start: #83a1de;
 $bg-mid: #347ccf;
 $bg-end: #0058ab;
@@ -11,7 +9,6 @@ $shadow: 4px 6px 15px 5px #004F9C;
 
 // ----------------------------------------------------------------------
 // Mixins
-// ----------------------------------------------------------------------
 @mixin card {
     box-shadow: $shadow;
     border-radius: 15px;
@@ -24,7 +21,6 @@ $shadow: 4px 6px 15px 5px #004F9C;
 
 // ----------------------------------------------------------------------
 // Reset básico
-// ----------------------------------------------------------------------
 *,
 *::before,
 *::after {
@@ -44,47 +40,7 @@ body {
 
 // ----------------------------------------------------------------------
 // Header
-// ----------------------------------------------------------------------
 header {
-    /* nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        transition: .3s;
-        border: 1px solid transparent;
-
-        img {
-            width: 21vh;
-        }
-
-        // Menú principal
-        .itemsNav {
-            display: flex;
-
-            li {
-                list-style: none;
-                font-size: 2.3vh;
-                transition: .3s;
-                margin-right: 15px;
-
-                &:hover {
-                    transform: translateY(1px);
-                }
-
-                a {
-                    color: $text;
-                    text-decoration: none;
-                }
-            }
-        }
-
-        // Redes
-        .redes {
-            display: none;
-            list-style: none;
-        }
-
-    } */
 
     .navv {
 
@@ -157,7 +113,6 @@ header {
 
 // ----------------------------------------------------------------------
 // Contenedor principal
-// ----------------------------------------------------------------------
 #contenedor {
     display: grid;
     grid-template-columns: 1fr;
@@ -180,7 +135,6 @@ header {
 
 // ----------------------------------------------------------------------
 // Clima Actual 
-// ----------------------------------------------------------------------
 #climaActual {
     @include card;
     padding: 25px;
@@ -260,7 +214,6 @@ header {
 
 // ----------------------------------------------------------------------
 // Clima Semanal
-// ----------------------------------------------------------------------
 #climaLocalSemanal {
     @include card;
 
@@ -322,7 +275,6 @@ header {
 
 // ----------------------------------------------------------------------
 // Clima de Hoy 
-// ----------------------------------------------------------------------
 #climaLocalHoy {
     display: flex;
     justify-content: center;
@@ -398,7 +350,6 @@ header {
 
 // ----------------------------------------------------------------------
 // Breakpoints
-// ----------------------------------------------------------------------
 
 // Tablet muy pequeñas
 @media screen and (min-width: 560px) {
@@ -421,7 +372,7 @@ header {
 }
 
 // Tablet pequeñas
-@media (min-width: 650px) {
+@media (min-width: 900px) {
 
     main {
         padding-left: 25vh;
@@ -560,6 +511,7 @@ header {
         }
     }
 }
+
 
 // Desktop
 @media (min-width: 1024px) {
