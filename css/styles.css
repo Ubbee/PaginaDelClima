@@ -109,24 +109,24 @@ header .navv .redes {
   justify-content: center;
 }
 #climaActual .infoActual .iconoT .wi {
-  font-size: 15vh;
+  font-size: 100px;
 }
 #climaActual .infoActual .iconoT h2 {
-  font-size: 7vh;
+  font-size: 54px;
   font-weight: 100;
 }
 #climaActual .infoActual .iconoT h2 span {
-  font-size: 2.5vh;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 #climaActual .infoActual .infoParticular {
-  font-size: 2.5vh;
+  font-size: 1rem;
   font-weight: 100;
 }
 #climaActual .infoActual .infoParticular h3 {
   border-bottom: 1px solid rgb(92, 157, 255);
   margin-bottom: 7px;
-  font-size: 2vh;
+  font-size: 1.2rem;
 }
 #climaActual .infoActual .infoParticular p {
   margin: 2px 0;
@@ -179,11 +179,11 @@ header .navv .redes {
   min-width: 0;
 }
 #climaLocalSemanal .contenedorClimaSemanal .contenedorClimaIndividual p {
-  font-size: 1.5vh;
+  font-size: 0.7rem;
   margin-top: 3px;
 }
 #climaLocalSemanal .contenedorClimaSemanal .contenedorClimaIndividual h2 {
-  font-size: 2vh;
+  font-size: 0.9rem;
 }
 #climaLocalSemanal .contenedorClimaSemanal .tituloClimaIndiv {
   display: flex;
@@ -241,7 +241,7 @@ header .navv .redes {
   font-size: 1.5rem;
 }
 #climaLocalHoy .climas .tempImg .tituloItem i {
-  font-size: 4vh;
+  font-size: 1.9rem;
   padding-right: 6px;
 }
 #climaLocalHoy .climas .tempImg h3 {
@@ -253,8 +253,15 @@ header .navv .redes {
   width: 60%;
 }
 #climaLocalHoy .climas .tempImg p {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
   padding: 0;
   margin: 0;
+  line-height: 1.1;
+}
+#climaLocalHoy .climas .tempImg p span {
+  font-weight: 600;
 }
 
 @media screen and (min-width: 560px) {
@@ -269,9 +276,65 @@ header .navv .redes {
     align-items: center;
   }
 }
+@media screen and (min-width: 700px) {
+  #climaActual .infoActual {
+    flex-direction: column;
+  }
+  #climaActual .infoActual .iconoT {
+    flex-direction: row;
+    margin-top: 50px;
+  }
+  #climaActual .infoActual .iconoT .wi {
+    font-size: 100px;
+  }
+  #climaActual .infoActual .iconoT h2 {
+    font-size: 66px;
+    margin-left: 20px;
+  }
+  #climaActual .infoActual .iconoT h2 span {
+    font-size: 2.5rem;
+  }
+  #climaActual .infoActual .infoParticular {
+    font-size: 1.3rem;
+    line-height: 1.3;
+  }
+  #climaActual .infoActual .infoParticular h3 {
+    font-size: 2rem;
+  }
+  #climaActual .infoActual .infoParticular {
+    margin: 10px 0px 40px;
+  }
+  #climaLocalSemanal .contenedorPrincipalSemanal .contenedorClimaIndividual .tituloClimaIndiv h2 {
+    font-size: 1.5rem;
+  }
+  #climaLocalSemanal .contenedorPrincipalSemanal .contenedorClimaIndividual p {
+    font-size: 1rem;
+    margin-top: 3px;
+  }
+}
 @media (min-width: 900px) {
   main {
     padding-left: 25vh;
+  }
+  #climaActual .infoActual .iconoT {
+    flex-direction: column;
+  }
+  #climaActual .infoActual .iconoT .wi {
+    font-size: 15vh;
+  }
+  #climaActual .infoActual .iconoT h2 {
+    font-size: 6vh;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+  #climaActual .infoActual .iconoT h2 span {
+    font-size: 2.5vh;
+  }
+  #climaActual .infoActual .infoParticular {
+    font-size: 2vh;
+  }
+  #climaActual .infoActual .infoParticular h3 {
+    font-size: 2.2vh;
   }
   #climaLocalHoy .climas .tempImg .tituloItem h2 {
     font-size: 2.6vh;
