@@ -61,8 +61,15 @@ function renderHoy(provinciaElement, hourly) {
     const fin = new Date(ahora); fin.setHours(ahora.getHours() + 12);
 
     hourly.time.forEach((_, i) => {
+
         const horaApi = new Date(hourly.time[i]);
+
         if (horaApi >= ahora && horaApi < fin) {
+            let dia = horaApi.getDay()-1
+            if (horaApi.getDay() === 0) {
+                console.log("holaaaaaaaaaaaaaaaaaaaaa");
+                dia = 6
+            }
             const icono = weatherMap[hourly.weather_code[i]] || "wi-na";
             const item = document.createElement("div");
             item.classList.add("tempImg");
@@ -71,14 +78,17 @@ function renderHoy(provinciaElement, hourly) {
                     <i class="wi ${icono}"></i>
                     <h2>${hourly.temperature_2m[i]}<span> °C</span></h2>
                 </div>
-                <h3>${diasDeSemana[horaApi.getDay()]}</h3>
+                <h3>${diasDeSemana[dia]}</h3>
                 <p class="hora"><strong>${horaApi.getHours()}:00hs</strong></p>
                 <p><span>Nubes:</span> ${hourly.cloud_cover[i]}%</p>
                 <p><span>Precipitacion:</span> ${hourly.precipitation_probability[i]}%</p>
                 <p><i class="wi wi-strong-wind"></i> ${hourly.wind_speed_10m[i]}km/h - ${hourly.wind_direction_10m[i]}°</p>
             `;
             fragment.appendChild(item);
+
+
         }
+
     });
     lista.appendChild(fragment);
 }
@@ -211,7 +221,7 @@ function renderSemanal(contenedor, daily) {
     contenedor.appendChild(wrapper);
 }
 
-// -------------------- Orquestador por coordenadas --------------------
+// -------------------- titulos segun locacion --------------------
 function renderTodo(lat, lon) {
     // por horas en contenedorTres
     fetchReverse(lat, lon).then(data => {
