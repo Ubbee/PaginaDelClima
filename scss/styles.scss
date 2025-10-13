@@ -1,6 +1,8 @@
 $bg-start: #83a1de;
 $bg-mid: #347ccf;
 $bg-end: #0058ab;
+$bg-mid-dark: #003e79;
+$bg-end-dark: #00274b;
 
 $text: #fff;
 $accent-border: rgb(92, 157, 255);
@@ -37,6 +39,21 @@ body {
     font-family: Arial, Helvetica, sans-serif;
 }
 
+//DARK MODE
+body.active {
+    background: linear-gradient(90deg, $bg-end-dark 0%, $bg-mid-dark 49%, $bg-end 100%);
+
+    header {
+
+        .navv {
+            background: none;
+            &:hover {
+                border-right: 1px solid rgb(24, 82, 170);
+            }
+        }
+    }
+}
+
 // ----------------------------------------------------------------------
 // Header
 header {
@@ -45,12 +62,12 @@ header {
 
         a {
             img {
-                width: 21vh;
+                width: 10rem;
             }
         }
 
         .navbar-toggler {
-            border-color: #fff;
+            border-color: $text;
             margin-right: 4%;
 
             .navbar-toggler-icon {
@@ -64,7 +81,7 @@ header {
 
         #navbarContenido {
             position: absolute;
-            top: 67%;
+            top: 82%;
             right: 2.5%;
             background-color: #1667BA;
             backdrop-filter: blur(10px);
@@ -73,12 +90,14 @@ header {
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
-            height: 150px;
+            height: 200px;
 
             ul {
+                display: flex;
+
                 li {
                     a {
-                        color: white;
+                        color: $text;
                     }
 
                     padding: 5px 15px;
@@ -88,16 +107,44 @@ header {
                         border-bottom-left-radius: 10px;
                         border-bottom-right-radius: 10px;
                     }
+                    &:last-child:hover {
+                        background-color: transparent;
+                    }
                 }
 
                 li:hover {
                     background-color: #64a8f1;
 
-                    a:hover {
+                    a {
                         color: #1667BA;
                     }
                 }
             }
+        }
+
+        #container-dark {
+            background-color: $text;
+            position: relative;
+            width: 80px;
+            height: 40px;
+            border-radius: 25px;
+            cursor: pointer;
+
+            .toggle {
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 40px;
+                height: 40px;
+                transform: scale(.7);
+                background-color: $bg-mid;
+                border-radius: 25px;
+            }
+        }
+
+        #container-dark.active .toggle {
+            left: 40px;
+            background-color: $bg-mid-dark;
         }
 
         // Redes
@@ -106,6 +153,7 @@ header {
             list-style: none;
         }
     }
+
 
 
 }
@@ -117,7 +165,7 @@ header {
     grid-template-columns: 1fr;
     width: 95%;
     margin: 0 auto;
-    padding: 70px 16px 16px;
+    padding: 130px 16px 16px;
     gap: 15px;
     @include grid-minwidth-fix;
 
@@ -240,7 +288,7 @@ header {
         @include grid-minwidth-fix;
 
         &:hover {
-            border: 1px solid rgb(236, 236, 236);
+            border: 1px solid $text;
         }
 
         .contenedorClimaIndividual {
@@ -309,7 +357,7 @@ header {
             transition: .4s;
 
             &:hover {
-                border: 1px solid rgb(236, 236, 236);
+                border: 1px solid $text;
             }
 
             .tituloItem {
@@ -360,7 +408,7 @@ header {
     header {
         .navv {
             #navbarContenido {
-                top: 83%;
+                /* top: 89% !important; */
             }
         }
     }
@@ -373,6 +421,17 @@ header {
         }
     }
 
+    #contenedor {
+        padding: 70px 16px 16px;
+    }
+
+    header {
+        .navv {
+            #navbarContenido {
+                top: 74%;
+            }
+        }
+    }
 }
 
 // Tablet muy pequeñas
@@ -403,7 +462,7 @@ header {
 
 @media screen and (min-width: 700px) {
 
-    
+
 
     #climaActual {
         .infoActual {
@@ -503,8 +562,8 @@ header {
                 }
 
                 h2 {
-                    font-size: 6vh;
-                    font-weight: 600;
+                    font-size: 4rem;
+                    font-weight: 400;
                     margin-top: 8px;
 
                     span {
@@ -546,10 +605,8 @@ header {
             width: 25vh;
             position: fixed;
             height: 100vh;
-            background: #6c98db;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-
+            border: transparent;
+            transition: 0.6s;
 
             &:hover {
                 border-right: 1px solid rgb(162, 199, 255);
@@ -578,15 +635,17 @@ header {
                         flex-direction: column;
 
                         li {
-                            &:hover {
-                                transform: translateX(3px);
-                                background-color: transparent;
+                            background-color: none;
 
-                                a {
-                                    color: white;
+                            a {
+                                transition: 0.3s;
+
+                                &:hover {
+                                    color: $text;
+                                    transform: translateX(3px);
                                 }
-                            }
 
+                            }
                         }
                     }
 

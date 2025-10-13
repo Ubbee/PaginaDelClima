@@ -5,6 +5,14 @@ const contenedorUno = document.getElementById("climaActual");
 const contenedorDos = document.getElementById("climaLocalSemanal");
 const contenedorTres = document.getElementById("climaLocalHoy");
 
+const toggle = document.getElementById("container-dark");
+const body = document.querySelector("body");
+
+toggle.addEventListener("click", ()=>{
+    toggle.classList.toggle("active")
+    body.classList.toggle("active")
+})
+
 const weatherMap = {
     0: "wi-day-sunny", 1: "wi-day-sunny-overcast", 2: "wi-day-cloudy", 3: "wi-cloudy",
     45: "wi-fog", 48: "wi-fog",
@@ -67,7 +75,6 @@ function renderHoy(provinciaElement, hourly) {
         if (horaApi >= ahora && horaApi < fin) {
             let dia = horaApi.getDay()-1
             if (horaApi.getDay() === 0) {
-                console.log("holaaaaaaaaaaaaaaaaaaaaa");
                 dia = 6
             }
             const icono = weatherMap[hourly.weather_code[i]] || "wi-na";
