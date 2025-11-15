@@ -20,6 +20,12 @@ $shadow: 4px 6px 15px 5px #004F9C;
     min-width: 0;
 }
 
+@mixin flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 // ----------------------------------------------------------------------
 // Reset básico
 *,
@@ -35,7 +41,7 @@ html {
 }
 
 body {
-    background: linear-gradient(90deg, $bg-start 0%, $bg-mid 49%, $bg-end 100%);
+    background: linear-gradient(90deg, $bg-start 0%, $bg-mid 30%, $bg-end 100%);
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -47,9 +53,8 @@ body.active {
 
         .navv {
             background: none;
-            &:hover {
-                border-right: 1px solid rgb(24, 82, 170);
-            }
+
+            ul {}
         }
     }
 }
@@ -107,6 +112,7 @@ header {
                         border-bottom-left-radius: 10px;
                         border-bottom-right-radius: 10px;
                     }
+
                     &:last-child:hover {
                         background-color: transparent;
                     }
@@ -123,28 +129,44 @@ header {
         }
 
         #container-dark {
-            background-color: $text;
+            background-color: #c5d8ff;
             position: relative;
-            width: 80px;
-            height: 40px;
+            width: 60px;
+            height: 30px;
             border-radius: 25px;
             cursor: pointer;
 
             .toggle {
+                @include flex;
                 position: absolute;
                 top: 0;
                 left: 0;
-                width: 40px;
-                height: 40px;
-                transform: scale(.7);
+                width: 30px;
+                height: 30px;
+                transform: scale(0.8);
                 background-color: $bg-mid;
                 border-radius: 25px;
+                color: $text;
+
+                .moon {
+                    display: none;
+
+                }
             }
         }
 
         #container-dark.active .toggle {
-            left: 40px;
+            left: 30px;
             background-color: $bg-mid-dark;
+            transition: 0.3s;
+
+            .moon {
+                display: block;
+            }
+
+            .sun {
+                display: none;
+            }
         }
 
         // Redes
@@ -198,16 +220,12 @@ header {
     }
 
     .infoActual {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        @include flex;
         gap: 15px;
 
         .iconoT {
-            display: flex;
+            @include flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
             margin-right: 20px;
 
             .wi {
@@ -308,8 +326,7 @@ header {
         }
 
         .tituloClimaIndiv {
-            display: flex;
-            align-items: center;
+            @include flex;
             @include grid-minwidth-fix;
 
             h2 {
@@ -401,6 +418,108 @@ header {
     }
 }
 
+#buscador {
+
+    display: grid;
+    grid-template-columns: 1fr;
+    width: 95%;
+    margin: 0 auto;
+    gap: 15px;
+    padding: 50px 16px 16px;
+    @include grid-minwidth-fix;
+
+    >* {
+        @include grid-minwidth-fix;
+    }
+
+
+    .contenedor-buscador {
+        @include card;
+        height: 400px;
+        width: 100%;
+        @include grid-minwidth-fix;
+
+        .elemento-busca {
+            @include flex;
+            margin-top: 30px;
+
+            .input-wrapper {
+                display: flex;
+                align-items: center;
+
+                .inputB {
+                    position: relative;
+                    max-width: 190px;
+                    background-color: #f5f5f5;
+                    color: #242424;
+                    padding: .15rem .5rem;
+                    min-height: 40px;
+                    border-radius: 4px;
+                    outline: none;
+                    border: none;
+                    line-height: 1.15;
+                    box-shadow: 0px 10px 20px -18px;
+
+                    &:focus {
+                        border-bottom: 2px solid $bg-start;
+                        border-radius: 4px 4px 2px 2px;
+                    }
+
+                    &:hover {
+                        outline: 1px solid lightgrey;
+                    }
+                }
+
+
+
+                .listaDesplegable {
+                    position: absolute;
+                    top: 145.5rem;
+                    background-color: $bg-start;
+                    width: 190px;
+                    display: flex;
+                    justify-content: start;
+                    flex-direction: column;
+
+                    li {
+                        transform: translateX(-15px);
+                        list-style: none;
+                        font-size: 0.7rem;
+                        width: 100%;
+
+                        a{
+                            color: white;
+                            text-decoration: none;
+                        }
+
+                        &:hover {
+                            background-color: #98b6f1;
+                        }
+                    }
+                }
+            }
+
+            #boton-busca {
+                padding: 7px 14px;
+                border: 0;
+                border-radius: 5px;
+                margin-left: 5px;
+            }
+
+        }
+
+        .respuesta-busqueda {}
+
+    }
+
+    .elemento-dos {
+        @include card;
+        @include grid-minwidth-fix;
+        @include flex;
+    }
+
+}
+
 // ----------------------------------------------------------------------
 // Breakpoints
 
@@ -412,6 +531,16 @@ header {
             }
         }
     }
+
+    /* .contenedor-buscador {
+        .elemento-buca {
+            .input-wrapper {
+                .listaDesplegable {
+                    top: 111rem !important;
+                }
+            }
+        }
+    } */
 }
 
 @media screen and (min-width: 390px) {
@@ -608,10 +737,6 @@ header {
             border: transparent;
             transition: 0.6s;
 
-            &:hover {
-                border-right: 1px solid rgb(162, 199, 255);
-            }
-
             .cont {
                 display: flex;
                 align-items: center;
@@ -637,11 +762,15 @@ header {
                         li {
                             background-color: none;
 
+                            &:hover {
+                                background-color: transparent;
+                            }
+
                             a {
                                 transition: 0.3s;
+                                color: $text;
 
                                 &:hover {
-                                    color: $text;
                                     transform: translateX(3px);
                                 }
 
@@ -652,9 +781,7 @@ header {
                 }
 
                 .redes {
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
+                    @include flex;
                     gap: 12px;
                     padding: 8px 0;
                     margin: 0;
@@ -754,9 +881,8 @@ header {
 
     #climaLocalHoy {
         .climas {
-            display: flex;
+            @include flex;
             flex-wrap: wrap;
-            justify-content: center;
         }
     }
 }

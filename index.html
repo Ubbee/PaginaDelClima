@@ -43,7 +43,10 @@
                         </li>
                         <li>
                             <div id="container-dark">
-                                <div class="toggle"></div>
+                                <div class="toggle">
+                                    <ion-icon class="sun" name="sunny"></ion-icon>
+                                    <ion-icon class="moon" name="moon"></ion-icon>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -65,10 +68,50 @@
             <div id="climaActual"></div>
             <div id="climaLocalSemanal"></div>
             <div id="climaLocalHoy"></div>
-
         </section>
 
+        <!---------- Contenido para buscar ----------->
+        <section id="buscador">
+            <div class="contenedor-buscador">
+                <div class="elemento-busca">
+                    <div class="input-wrapper" id="lista">
+                        <input class="inputB" id="inputBusqueda" name="text" placeholder="Ciudad/Estado" type="search">
+                        <a href=""></a>
+                    </div>
+                    <button id="boton-busca">Buscar</button>
+                </div>
+
+                <div class="respuesta-busqueda">
+                    <div class="busqueda">
+                        <div class="titulo-busqueda">
+                            <i id="icono-busqueda" class=" "></i>
+                            <h3 id="titulo-buscado"></h3>
+                            <h3></h3>
+                            <p></p>
+                        </div>
+                        <div class="datos-busqueda">
+                            <p class="pe viento"></p>
+                            <p class="pe hora"></p>
+                            <p class="pe precipitacion"></p>
+                            <p class="pe nubes"></p>
+                            <p class="pe direccion-viento"></p>
+                            <p class="pe humedad"></p>
+                        </div>
+                    </div>
+                    <div>grafico</div>
+                </div>
+
+            </div>
+
+            <div class="elemento-dos">
+                <h3>en proceso</h3>
+            </div>
+        </section>
+        <!-------------------------------------------->
     </main>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
     <script src="./js/main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"

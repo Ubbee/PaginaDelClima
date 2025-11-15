@@ -4,11 +4,15 @@
 const contenedorUno = document.getElementById("climaActual");
 const contenedorDos = document.getElementById("climaLocalSemanal");
 const contenedorTres = document.getElementById("climaLocalHoy");
+const busqueda = document.getElementById("boton-busca");
+const inputB = document.getElementById("inputBusqueda");
+
+
 
 const toggle = document.getElementById("container-dark");
 const body = document.querySelector("body");
 
-toggle.addEventListener("click", ()=>{
+toggle.addEventListener("click", () => {
     toggle.classList.toggle("active")
     body.classList.toggle("active")
 })
@@ -58,6 +62,14 @@ function fetchSemanal(lat, lon) {
         .then(r => r.json());
 }
 
+function fetchBusqueda() {
+
+    console.log(`https://geocoding-api.open-meteo.com/v1/search?name=${inputB.value.trim().replace(" ", "")}&count=10&language=es&format=json`);
+
+    return fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${inputB.value.trim().replace(" ", "")}&count=10&language=es&format=json`)
+        .then(data => data.json())
+}
+
 // -------------------- Render: por horas --------------------
 function renderHoy(provinciaElement, hourly) {
     const fragment = document.createDocumentFragment();
@@ -73,7 +85,7 @@ function renderHoy(provinciaElement, hourly) {
         const horaApi = new Date(hourly.time[i]);
 
         if (horaApi >= ahora && horaApi < fin) {
-            let dia = horaApi.getDay()-1
+            let dia = horaApi.getDay() - 1
             if (horaApi.getDay() === 0) {
                 dia = 6
             }
@@ -228,6 +240,68 @@ function renderSemanal(contenedor, daily) {
     contenedor.appendChild(wrapper);
 }
 
+//-----------------------Busqueda----------------------------------
+
+function busquedaApi() {
+    fetchBusqueda().then((data) => {
+        const result = data.results;
+
+        const contenedorListaD = document.getElementById("lista");
+        const existente = contenedorListaD.querySelector(".listaDesplegable");
+
+        const valor = inputB.value.trim();
+
+        // Si hay menos de 3 letras → borrar lista y salir
+        if (valor.length < 2) {
+            if (existente) existente.remove();
+            return;
+        }
+
+        // Si ya existe una lista → eliminarla ANTES de crear una nueva
+        if (existente) existente.remove();
+
+        // Crear nuevo UL
+        const listaDesplegable = document.createElement("ul");
+        listaDesplegable.classList.add("listaDesplegable");
+
+        // Meter los LI dentro del UL
+        result.forEach((item, i) => {
+            const li = document.createElement("li");
+            li.classList.add("item");
+            li.innerHTML = `
+                <a data-index="${i}">
+                    ${item.name}, ${item.admin2}, ${item.country}
+                </a>
+            `;
+            listaDesplegable.appendChild(li);
+        });
+
+        // Insertar UL en el DOM
+        contenedorListaD.appendChild(listaDesplegable);
+
+        // Seleccionar todos los li.item DESPUÉS de agregarlos al DOM
+        const items = document.querySelectorAll(".item");
+
+        // Agregar listener a cada LI
+        items.forEach((li) => {
+            li.addEventListener("click", (e) => {
+                const a = e.target;
+                const index = Number(a.dataset.index);
+
+                console.log("Elegiste:", result[index]);
+
+                inputB.value = `${result[index].name}, ${result[index].admin2}, ${result[index].country}`;
+
+                // Borrar dropdown después de seleccionar
+                listaDesplegable.remove();
+
+                // Mostrar resultado en la tarjeta
+                document.getElementById("titulo-buscado").innerHTML = result[index].name;
+            });
+        });
+    });
+}
+
 // -------------------- titulos segun locacion --------------------
 function renderTodo(lat, lon) {
     // por horas en contenedorTres
@@ -250,6 +324,13 @@ function renderTodo(lat, lon) {
         contenedorDos.appendChild(tituloSem);
         return fetchSemanal(lat, lon).then(payload => renderSemanal(contenedorDos, payload.daily));
     });
+
+    /* // BUSQUEDA en contenedor buscador
+    fetchReverse(lat, lon).then(() => {
+        const tituloSem = crearTitulo("tituloSemanal", `<h2>Semana</h2>`);
+        contenedorDos.appendChild(tituloSem);
+        return fetchSemanal(lat, lon).then(payload => renderSemanal(contenedorDos, payload.daily));
+    }); */
 }
 
 // -------------------- Init --------------------
@@ -259,3 +340,5 @@ document.addEventListener("DOMContentLoaded", () => {
         () => renderTodo(-32.8908, -68.8272) // Mendoza por defecto
     );
 });
+inputB.addEventListener("keydown", busquedaApi);
+
