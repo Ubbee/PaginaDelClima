@@ -6,8 +6,9 @@ const contenedorDos = document.getElementById("climaLocalSemanal");
 const contenedorTres = document.getElementById("climaLocalHoy");
 const busqueda = document.getElementById("boton-busca");
 const inputB = document.getElementById("inputBusqueda");
-
-
+let chartClima = null;
+let resultadosGlobales = [];
+let indiceSeleccionado = null;
 
 const toggle = document.getElementById("container-dark");
 const body = document.querySelector("body");
@@ -16,6 +17,7 @@ toggle.addEventListener("click", () => {
     toggle.classList.toggle("active")
     body.classList.toggle("active")
 })
+
 
 const weatherMap = {
     0: "wi-day-sunny", 1: "wi-day-sunny-overcast", 2: "wi-day-cloudy", 3: "wi-cloudy",
@@ -53,6 +55,8 @@ function fetchHoy(lat, lon) {
 }
 
 function fetchActualYGrafico(lat, lon) {
+    console.log(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,visibility&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,cloud_cover,visibility,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m,surface_pressure,pressure_msl,dew_point_2m,wind_gusts_10m&timezone=auto`);
+
     return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,relative_humidity_2m,is_day,precipitation,rain,showers,snowfall,weather_code,cloud_cover,pressure_msl,surface_pressure,wind_speed_10m,wind_direction_10m,wind_gusts_10m,visibility&hourly=temperature_2m,apparent_temperature,relative_humidity_2m,weather_code,cloud_cover,visibility,precipitation_probability,precipitation,wind_speed_10m,wind_direction_10m,surface_pressure,pressure_msl,dew_point_2m,wind_gusts_10m&timezone=auto`)
         .then(r => r.json());
 }
@@ -63,9 +67,6 @@ function fetchSemanal(lat, lon) {
 }
 
 function fetchBusqueda() {
-
-    console.log(`https://geocoding-api.open-meteo.com/v1/search?name=${inputB.value.trim().replace(" ", "")}&count=10&language=es&format=json`);
-
     return fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${inputB.value.trim().replace(" ", "")}&count=10&language=es&format=json`)
         .then(data => data.json())
 }
@@ -174,6 +175,7 @@ function renderClimaChart(hourly, startIndex = 0, cantidad = 12) {
 // -------------------- Render: Actual + grafico --------------------
 function renderActual(contenedorTitulo, data) {
     const climas = data.current;
+    console.log(data)
     const hourly = data.hourly;
     const fragment = document.createDocumentFragment();
 
@@ -251,20 +253,16 @@ function busquedaApi() {
 
         const valor = inputB.value.trim();
 
-        // Si hay menos de 3 letras → borrar lista y salir
         if (valor.length < 2) {
             if (existente) existente.remove();
             return;
         }
 
-        // Si ya existe una lista → eliminarla ANTES de crear una nueva
         if (existente) existente.remove();
 
-        // Crear nuevo UL
         const listaDesplegable = document.createElement("ul");
         listaDesplegable.classList.add("listaDesplegable");
 
-        // Meter los LI dentro del UL
         result.forEach((item, i) => {
             const li = document.createElement("li");
             li.classList.add("item");
@@ -276,30 +274,114 @@ function busquedaApi() {
             listaDesplegable.appendChild(li);
         });
 
-        // Insertar UL en el DOM
         contenedorListaD.appendChild(listaDesplegable);
-
-        // Seleccionar todos los li.item DESPUÉS de agregarlos al DOM
         const items = document.querySelectorAll(".item");
-
-        // Agregar listener a cada LI
+        let resultadoA = 0
         items.forEach((li) => {
             li.addEventListener("click", (e) => {
                 const a = e.target;
                 const index = Number(a.dataset.index);
 
-                console.log("Elegiste:", result[index]);
 
                 inputB.value = `${result[index].name}, ${result[index].admin2}, ${result[index].country}`;
 
-                // Borrar dropdown después de seleccionar
                 listaDesplegable.remove();
 
-                // Mostrar resultado en la tarjeta
-                document.getElementById("titulo-buscado").innerHTML = result[index].name;
+                resultadosGlobales = result;
+                indiceSeleccionado = index;
+                console.log(indiceSeleccionado);
             });
         });
     });
+}
+busqueda.addEventListener("click", () => {
+    mostrarResult(resultadosGlobales, indiceSeleccionado)
+})
+function mostrarResult(result, resultadoA) {
+    console.log(indiceSeleccionado);
+
+    document.getElementById("titulo-buscado").textContent = result[resultadoA].name + ", " + result[resultadoA].country;
+
+
+    fetchActualYGrafico(result[resultadoA].latitude, result[resultadoA].longitude)
+        .then((data) => {
+
+            if (chartClima) {
+                chartClima.destroy();
+            }
+
+            const clima = data.current;
+            const date = new Date();
+            const horaApi = new Date(clima.time);
+
+            document.getElementById("viento").textContent = `Viento: ${clima.wind_speed_10m} km/h - ${clima.wind_direction_10m}°`;
+            document.getElementById("hora").textContent = `Hora: ${horaApi.getHours()}:00`;
+            document.getElementById("nubes").textContent = `Nubes: ${clima.cloud_cover}%`;
+            document.getElementById("humedad").textContent = `Humedad ${clima.relative_humidity_2m}%`;
+
+            document.getElementById("temperatura").textContent = `${clima.temperature_2m}°C`
+
+            const icono = weatherMap[clima.weather_code] || "wi-na";
+            const iconoClima = document.getElementById("icono-busqueda");
+            iconoClima.classList.add(`${icono}`)
+
+
+
+            //GRACIFO CHART.JS
+            const horas = data.hourly.time.slice(0, 12).map(h =>
+                new Date(h).getHours() + ":00"
+            );
+
+            const temperaturas = data.hourly.temperature_2m.slice(0, 12);
+
+            const ctx = document.getElementById("climaChart2").getContext("2d");
+            console.log("CREANDO CHART");
+            chartClima = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: horas,
+                    datasets: [{
+                        label: "Temperatura (°C)",
+                        data: temperaturas,
+                        borderWidth: 2,
+                        tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: "#ffffff" 
+                            },
+                            grid: {
+                                color: "rgba(255,255,255,0.15)"
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: "#ffffff" 
+                            },
+                            grid: {
+                                color: "rgba(255,255,255,0.15)" 
+                            }
+                        }
+                    },
+
+                    plugins: {
+                        legend: {
+                            labels: {
+                                color: "#ffffff" 
+                            }
+                        }
+                    }
+                }
+
+            });
+
+        })
 }
 
 // -------------------- titulos segun locacion --------------------
@@ -307,13 +389,16 @@ function renderTodo(lat, lon) {
     // por horas en contenedorTres
     fetchReverse(lat, lon).then(data => {
         const tituloProv = crearTitulo("prov", `<h1>${data.principalSubdivision}</h1>`);
+        console.log(data);
         contenedorTres.appendChild(tituloProv);
         return fetchHoy(lat, lon).then(hoy => renderHoy(tituloProv, hoy.hourly));
     });
 
     // ACTUAL en contenedorUno
     fetchReverse(lat, lon).then(data => {
-        const titulo = crearTitulo("titulo", `<h1 class="tp">${data.locality}, ${data.principalSubdivision}</h1>`);
+        const titulo = crearTitulo("titulo", `<h1 class="tp">${data.locality}, ${data.principalSubdivision}</h1> `);
+        console.log(data);
+
         contenedorUno.appendChild(titulo);
         return fetchActualYGrafico(lat, lon).then(payload => renderActual(titulo, payload));
     });
@@ -325,20 +410,39 @@ function renderTodo(lat, lon) {
         return fetchSemanal(lat, lon).then(payload => renderSemanal(contenedorDos, payload.daily));
     });
 
-    /* // BUSQUEDA en contenedor buscador
-    fetchReverse(lat, lon).then(() => {
-        const tituloSem = crearTitulo("tituloSemanal", `<h2>Semana</h2>`);
-        contenedorDos.appendChild(tituloSem);
-        return fetchSemanal(lat, lon).then(payload => renderSemanal(contenedorDos, payload.daily));
-    }); */
 }
+
+function mostrarAviso(mensaje) {
+  const aviso = document.getElementById("aviso-ubicacion");
+  aviso.textContent = mensaje;
+  aviso.classList.remove("oculto");
+}
+
 
 // -------------------- Init --------------------
 document.addEventListener("DOMContentLoaded", () => {
     navigator.geolocation.getCurrentPosition(
-        pos => renderTodo(pos.coords.latitude, pos.coords.longitude),
-        () => renderTodo(-32.8908, -68.8272) // Mendoza por defecto
+        (pos) => {
+            const { latitude, longitude, accuracy } = pos.coords;
+
+            if (accuracy > 3000) {
+                mostrarAviso("Ubicación aproximada. Podés buscar tu ciudad/estado con precisión mas abajo.");
+            }
+
+            renderTodo(latitude, longitude);
+        },
+        () => {
+            console.warn("No se pudo obtener ubicación, usando fallback (Mendoza)");
+            renderTodo(-32.8908, -68.8272);
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
     );
 });
 inputB.addEventListener("keydown", busquedaApi);
+
+
 

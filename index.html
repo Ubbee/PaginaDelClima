@@ -64,7 +64,9 @@
     </header>
 
     <main>
+        
         <section id="contenedor">
+            <div id="aviso-ubicacion" class="aviso oculto"></div>
             <div id="climaActual"></div>
             <div id="climaLocalSemanal"></div>
             <div id="climaLocalHoy"></div>
@@ -73,6 +75,7 @@
         <!---------- Contenido para buscar ----------->
         <section id="buscador">
             <div class="contenedor-buscador">
+                <h2>Buscá el clima de tu ciudad</h2>
                 <div class="elemento-busca">
                     <div class="input-wrapper" id="lista">
                         <input class="inputB" id="inputBusqueda" name="text" placeholder="Ciudad/Estado" type="search">
@@ -84,21 +87,24 @@
                 <div class="respuesta-busqueda">
                     <div class="busqueda">
                         <div class="titulo-busqueda">
-                            <i id="icono-busqueda" class=" "></i>
+                            <div class="contenedor-titulo-Busqueda">
+                                <i id="icono-busqueda" class="wi "></i>
+                                <h3 id="temperatura"></h3>
+                            </div>
                             <h3 id="titulo-buscado"></h3>
-                            <h3></h3>
-                            <p></p>
                         </div>
-                        <div class="datos-busqueda">
-                            <p class="pe viento"></p>
-                            <p class="pe hora"></p>
-                            <p class="pe precipitacion"></p>
-                            <p class="pe nubes"></p>
-                            <p class="pe direccion-viento"></p>
-                            <p class="pe humedad"></p>
+                        <div class="contenedor-datos">
+                            <div class="datos-busqueda">
+                                <p class="pe" id="viento"></p>
+                                <p class="pe" id="hora"></p>
+                                <p class="pe" id="nubes"></p>
+                                <p class="pe" id="humedad"></p>
+                            </div>
                         </div>
                     </div>
-                    <div>grafico</div>
+                    <div class="grafico">
+                        <canvas id="climaChart2"></canvas>
+                    </div>
                 </div>
 
             </div>
