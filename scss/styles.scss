@@ -482,6 +482,7 @@ main {
                         border-bottom: 1px solid $accent-border;
                         margin: 30px 30px 0px;
                         @include flex;
+                        display: none;
 
                         .contenedor-titulo-Busqueda {
                             @include flex;
@@ -554,7 +555,7 @@ main {
                     .listaDesplegable {
                         position: absolute;
                         top: 100%;
-                        background-color: $bg-start;
+
                         width: 190px;
                         z-index: 1000;
                         display: flex;
@@ -563,10 +564,13 @@ main {
                         margin-top: 4px;
 
                         li {
-                            transform: translateX(-15px);
+                            background-color: $bg-start;
+                            transform: translateX(-32px);
                             list-style: none;
                             font-size: 0.7rem;
-                            width: 100%;
+                            width: 120%;
+                            cursor: pointer;
+                            padding: 2px 7px;
 
                             a {
                                 color: white;
@@ -591,13 +595,58 @@ main {
 
         }
 
-        .elemento-dos {
+        .resumen-clima {
             @include card;
             @include grid-minwidth-fix;
             @include flex;
+            padding: 20px 15px 10px;
         }
+
+        #nosotros {
+            max-width: 100%;
+            margin: 0 auto;
+            padding: 32px 20px;
+            text-align: center;
+            color: white;
+            margin-top: 100px;
+
+            h3 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-bottom: 20px;
+                position: relative;
+
+                &::after {
+                    content: "";
+                    display: block;
+                    width: 48px;
+                    height: 3px;
+                    margin: 10px auto 0;
+                    background: rgba(255, 255, 255, 0.6);
+                    border-radius: 2px;
+                }
+            }
+
+            p {
+                font-size: 0.95rem;
+                line-height: 1.7;
+                margin-bottom: 16px;
+                opacity: 0.95;
+            }
+
+            .copyright {
+                display: block;
+                margin-top: 24px;
+                font-size: 0.8rem;
+                opacity: 0.7;
+            }
+        }
+
     }
+
+
 }
+
 
 
 
@@ -653,12 +702,6 @@ main {
                 }
             }
         }
-
-        #buscador {
-            .contenedor-buscador {
-                .respuesta-busqueda {}
-            }
-        }
     }
 }
 
@@ -668,6 +711,7 @@ main {
         #aviso-ubicacion {
             grid-column: span 2;
             grid-row: 1;
+            text-decoration: none;
         }
 
         #climaActual {
@@ -764,6 +808,19 @@ main {
                             flex-direction: row-reverse
                         }
                     }
+                }
+            }
+
+            #nosotros {
+                max-width: 640px;
+                padding: 40px 28px;
+
+                h3 {
+                    font-size: 1.7rem;
+                }
+
+                p {
+                    font-size: 1rem;
                 }
             }
         }
@@ -979,9 +1036,19 @@ main {
                 width: 94%;
             }
 
-            .elemento-dos {
+            .resumen-clima {
+                display: none;
                 margin: 0 auto;
                 width: 94%;
+            }
+
+            #nosotros {
+                max-width: 720px;
+                padding: 48px 32px;
+
+                h3 {
+                    font-size: 1.8rem;
+                }
             }
         }
     }
@@ -993,12 +1060,13 @@ main {
         #contenedor {
             grid-template-columns: 9fr 2fr;
             width: 80%;
-        }
 
-        #climaLocalHoy {
-            .climas {
-                @include flex;
-                flex-wrap: wrap;
+
+            #climaLocalHoy {
+                .climas {
+                    @include flex;
+                    flex-wrap: wrap;
+                }
             }
         }
 
@@ -1007,7 +1075,12 @@ main {
                 width: 83.5%;
             }
 
-            .elemento-dos {
+            .resumen-clima {
+                width: 83.5%;
+            }
+
+            .nosotros {
+                margin: 0 auto;
                 width: 83.5%;
             }
         }

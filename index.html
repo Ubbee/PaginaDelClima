@@ -36,10 +36,10 @@
                             <a class="nav-link" href="#">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Buscar</a>
+                            <a class="nav-link" href="#buscador">Buscar</a>
                         </li>
                         <li class="nav-item ">
-                            <a class="nav-link" href="#">Nosotros</a>
+                            <a class="nav-link" href="#nosotros">Nosotros</a>
                         </li>
                         <li>
                             <div id="container-dark">
@@ -64,9 +64,9 @@
     </header>
 
     <main>
-        
+
         <section id="contenedor">
-            <div id="aviso-ubicacion" class="aviso oculto"></div>
+            <a href="#buscador" id="aviso-ubicacion" class="aviso oculto"></a>
             <div id="climaActual"></div>
             <div id="climaLocalSemanal"></div>
             <div id="climaLocalHoy"></div>
@@ -99,6 +99,7 @@
                                 <p class="pe" id="hora"></p>
                                 <p class="pe" id="nubes"></p>
                                 <p class="pe" id="humedad"></p>
+                                <p class="pe" id="visibilidad"></p>
                             </div>
                         </div>
                     </div>
@@ -109,10 +110,39 @@
 
             </div>
 
-            <div class="elemento-dos">
-                <h3>en proceso</h3>
+            <div class="resumen-clima">
+                <p id="texto-resumen"></p>
             </div>
+            <div id="nosotros">
+                <h3>Sobre nosotros</h3>
+
+                <p>
+                    Somos una startup enfocada en crear herramientas simples, rápidas y confiables para el día a día.
+                    Esta aplicación nació con una idea clara: que consultar el clima sea algo inmediato, claro y sin
+                    vueltas.
+                </p>
+
+                <p>
+                    Nuestro objetivo es transformar datos meteorológicos en información útil, visual y fácil de
+                    entender,
+                    para que cualquier persona pueda planificar su día, su semana o sus actividades sin complicaciones.
+                    Creemos en la tecnología bien aplicada, en el diseño funcional y en productos que realmente aporten
+                    valor.
+                </p>
+
+                <p>
+                    Seguimos mejorando la plataforma de forma constante, escuchando a los usuarios y optimizando la
+                    experiencia
+                    para ofrecer información precisa y actualizada en todo momento.
+                </p>
+
+                <span class="copyright">
+                    © 2026 — Todos los derechos reservados.
+                </span>
+            </div>
+
         </section>
+
         <!-------------------------------------------->
     </main>
 

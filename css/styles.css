@@ -361,6 +361,7 @@ main #buscador .contenedor-buscador .respuesta-busqueda .busqueda .titulo-busque
   display: flex;
   justify-content: center;
   align-items: center;
+  display: none;
 }
 main #buscador .contenedor-buscador .respuesta-busqueda .busqueda .titulo-busqueda .contenedor-titulo-Busqueda {
   display: flex;
@@ -423,7 +424,6 @@ main #buscador .contenedor-buscador .elemento-busca .input-wrapper .inputB:hover
 main #buscador .contenedor-buscador .elemento-busca .input-wrapper .listaDesplegable {
   position: absolute;
   top: 100%;
-  background-color: #83a1de;
   width: 190px;
   z-index: 1000;
   display: flex;
@@ -432,10 +432,13 @@ main #buscador .contenedor-buscador .elemento-busca .input-wrapper .listaDespleg
   margin-top: 4px;
 }
 main #buscador .contenedor-buscador .elemento-busca .input-wrapper .listaDesplegable li {
-  transform: translateX(-15px);
+  background-color: #83a1de;
+  transform: translateX(-32px);
   list-style: none;
   font-size: 0.7rem;
-  width: 100%;
+  width: 120%;
+  cursor: pointer;
+  padding: 2px 7px;
 }
 main #buscador .contenedor-buscador .elemento-busca .input-wrapper .listaDesplegable li a {
   color: white;
@@ -450,7 +453,7 @@ main #buscador .contenedor-buscador .elemento-busca #boton-busca {
   border-radius: 5px;
   margin-left: 5px;
 }
-main #buscador .elemento-dos {
+main #buscador .resumen-clima {
   box-shadow: 4px 6px 15px 5px #004F9C;
   border-radius: 15px;
   color: #fff;
@@ -458,6 +461,42 @@ main #buscador .elemento-dos {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 20px 15px 10px;
+}
+main #buscador #nosotros {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 32px 20px;
+  text-align: center;
+  color: white;
+  margin-top: 100px;
+}
+main #buscador #nosotros h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  position: relative;
+}
+main #buscador #nosotros h3::after {
+  content: "";
+  display: block;
+  width: 48px;
+  height: 3px;
+  margin: 10px auto 0;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 2px;
+}
+main #buscador #nosotros p {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 16px;
+  opacity: 0.95;
+}
+main #buscador #nosotros .copyright {
+  display: block;
+  margin-top: 24px;
+  font-size: 0.8rem;
+  opacity: 0.7;
 }
 
 @media screen and (min-width: 390px) {
@@ -490,6 +529,7 @@ main #buscador .elemento-dos {
   main #aviso-ubicacion {
     grid-column: span 2;
     grid-row: 1;
+    text-decoration: none;
   }
   main #climaActual .infoActual .iconoT {
     flex-direction: column;
@@ -550,6 +590,16 @@ main #buscador .elemento-dos {
   }
   main #buscador .contenedor-buscador .respuesta-busqueda .busqueda .titulo-busqueda {
     flex-direction: row-reverse;
+  }
+  main #buscador #nosotros {
+    max-width: 640px;
+    padding: 40px 28px;
+  }
+  main #buscador #nosotros h3 {
+    font-size: 1.7rem;
+  }
+  main #buscador #nosotros p {
+    font-size: 1rem;
   }
 }
 @media (min-width: 930px) {
@@ -680,9 +730,17 @@ main #buscador .elemento-dos {
     margin: 0 auto;
     width: 94%;
   }
-  main #buscador .elemento-dos {
+  main #buscador .resumen-clima {
+    display: none;
     margin: 0 auto;
     width: 94%;
+  }
+  main #buscador #nosotros {
+    max-width: 720px;
+    padding: 48px 32px;
+  }
+  main #buscador #nosotros h3 {
+    font-size: 1.8rem;
   }
 }
 @media (min-width: 1200px) {
@@ -690,7 +748,7 @@ main #buscador .elemento-dos {
     grid-template-columns: 9fr 2fr;
     width: 80%;
   }
-  main #climaLocalHoy .climas {
+  main #contenedor #climaLocalHoy .climas {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -699,7 +757,11 @@ main #buscador .elemento-dos {
   main #buscador .contenedor-buscador {
     width: 83.5%;
   }
-  main #buscador .elemento-dos {
+  main #buscador .resumen-clima {
+    width: 83.5%;
+  }
+  main #buscador .nosotros {
+    margin: 0 auto;
     width: 83.5%;
   }
 }

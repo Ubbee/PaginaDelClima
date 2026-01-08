@@ -17,6 +17,14 @@ toggle.addEventListener("click", () => {
     toggle.classList.toggle("active")
     body.classList.toggle("active")
 })
+let busquedaReqId = 0;
+
+function normalizarTexto(str) {
+    return str
+        .toLowerCase()
+        .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+        .replace(/\s+/g, " ");
+}
 
 
 const weatherMap = {
@@ -34,6 +42,76 @@ const weatherMap = {
 };
 const direccionesViento = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSO", "SO", "OSO", "O", "ONO", "NO", "NNO"];
 const diasDeSemana = ["Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo"];
+
+function generarResumenClima(clima, ciudad) {
+    const temp = clima.temperature_2m;
+    const viento = clima.wind_speed_10m;
+    const nubes = clima.cloud_cover;
+    const lluvia = clima.precipitation ?? 0;
+    const visibilidadKm = clima.visibility;
+console.log(clima.precipitation);
+
+    let resumen = `En ${ciudad}, `;
+
+    if (temp < 8) {
+        resumen += "el día se presenta frío";
+    } else if (temp < 15) {
+        resumen += "el clima será fresco";
+    } else if (temp < 24) {
+        resumen += "se espera un clima agradable";
+    } else if (temp < 32) {
+        resumen += "el ambiente será cálido";
+    } else {
+        resumen += "el calor será protagonista";
+    }
+
+    if (lluvia > 5) {
+        resumen += ", con lluvias intensas previstas";
+    } else if (lluvia > 1) {
+        resumen += ", con probabilidad de lluvias moderadas";
+    } else if (lluvia > 0) {
+        resumen += ", con lluvias débiles aisladas";
+    } else {
+
+        if (nubes > 75) {
+            resumen += ", con cielo mayormente cubierto";
+        } else if (nubes > 40) {
+            resumen += ", con nubosidad variable";
+        } else {
+            resumen += ", con cielo mayormente despejado";
+        }
+    }
+
+    if (visibilidadKm < 2 && temp < 10) {
+        resumen += " Posible presencia de niebla.";
+    }
+
+
+    if (visibilidadKm < 1) {
+        resumen += ", con la visibilidad bastante reducida ";
+    } else if (visibilidadKm < 5) {
+        resumen += ", con baja visibilidad ";
+    } else if (visibilidadKm < 10) {
+        resumen += ", con visibilidad moderada";
+    } else if (visibilidadKm < 20) {
+        resumen += ", con buena visibilidad";
+    } else {
+        resumen += ", con excelente visibilidad";
+    }
+
+
+    if (viento > 35) {
+        resumen += ". Se recomienda precaución por vientos intensos";
+    } else if (viento > 20) {
+        resumen += ". El viento será moderado";
+    }
+
+    resumen += ".";
+
+    return resumen;
+}
+
+
 
 // -------------------- Helper --------------------
 function crearTitulo(selectorClase, html) {
@@ -67,7 +145,8 @@ function fetchSemanal(lat, lon) {
 }
 
 function fetchBusqueda() {
-    return fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${inputB.value.trim().replace(" ", "")}&count=10&language=es&format=json`)
+    const q = encodeURIComponent(inputB.value.trim());
+    return fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${q}&count=10&language=es&format=json`)
         .then(data => data.json())
 }
 
@@ -251,7 +330,11 @@ function busquedaApi() {
         const contenedorListaD = document.getElementById("lista");
         const existente = contenedorListaD.querySelector(".listaDesplegable");
 
-        const valor = inputB.value.trim();
+        const valor = inputB.value
+            .toLowerCase()
+            .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, " ");
+
 
         if (valor.length < 2) {
             if (existente) existente.remove();
@@ -262,17 +345,33 @@ function busquedaApi() {
 
         const listaDesplegable = document.createElement("ul");
         listaDesplegable.classList.add("listaDesplegable");
+        console.log(result);
 
         result.forEach((item, i) => {
+            const textoItem = `
+            ${item.name}
+            ${item.admin2 ?? ""}
+            ${item.country ?? ""}
+            `
+                .toLowerCase()
+                .normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+
+            // SOLO filtrar por la PRIMER palabra
+            const primeraPalabra = valor.split(" ")[0];
+            if (!textoItem.includes(primeraPalabra)) return;
+
             const li = document.createElement("li");
             li.classList.add("item");
+
             li.innerHTML = `
                 <a data-index="${i}">
-                    ${item.name}, ${item.admin2}, ${item.country}
+                ${item.name}${item.admin2 ? `, ${item.admin2}` : ""}, ${item.country}
                 </a>
-            `;
+                `;
+
             listaDesplegable.appendChild(li);
         });
+
 
         contenedorListaD.appendChild(listaDesplegable);
         const items = document.querySelectorAll(".item");
@@ -294,6 +393,7 @@ function busquedaApi() {
         });
     });
 }
+
 busqueda.addEventListener("click", () => {
     mostrarResult(resultadosGlobales, indiceSeleccionado)
 })
@@ -301,7 +401,7 @@ function mostrarResult(result, resultadoA) {
     console.log(indiceSeleccionado);
 
     document.getElementById("titulo-buscado").textContent = result[resultadoA].name + ", " + result[resultadoA].country;
-
+    const tituloBusqueda = document.querySelector(".titulo-busqueda").style.display = "flex"
 
     fetchActualYGrafico(result[resultadoA].latitude, result[resultadoA].longitude)
         .then((data) => {
@@ -310,15 +410,17 @@ function mostrarResult(result, resultadoA) {
                 chartClima.destroy();
             }
 
+
             const clima = data.current;
             const date = new Date();
             const horaApi = new Date(clima.time);
+            const visibilidadKm = clima.visibility / 1000;
 
             document.getElementById("viento").textContent = `Viento: ${clima.wind_speed_10m} km/h - ${clima.wind_direction_10m}°`;
             document.getElementById("hora").textContent = `Hora: ${horaApi.getHours()}:00`;
             document.getElementById("nubes").textContent = `Nubes: ${clima.cloud_cover}%`;
-            document.getElementById("humedad").textContent = `Humedad ${clima.relative_humidity_2m}%`;
-
+            document.getElementById("humedad").textContent = `Humedad: ${clima.relative_humidity_2m}%`;
+            document.getElementById("visibilidad").textContent = `Visibilidad:  ${visibilidadKm}km`;
             document.getElementById("temperatura").textContent = `${clima.temperature_2m}°C`
 
             const icono = weatherMap[clima.weather_code] || "wi-na";
@@ -354,7 +456,7 @@ function mostrarResult(result, resultadoA) {
                     scales: {
                         x: {
                             ticks: {
-                                color: "#ffffff" 
+                                color: "#ffffff"
                             },
                             grid: {
                                 color: "rgba(255,255,255,0.15)"
@@ -362,10 +464,10 @@ function mostrarResult(result, resultadoA) {
                         },
                         y: {
                             ticks: {
-                                color: "#ffffff" 
+                                color: "#ffffff"
                             },
                             grid: {
-                                color: "rgba(255,255,255,0.15)" 
+                                color: "rgba(255,255,255,0.15)"
                             }
                         }
                     },
@@ -373,7 +475,7 @@ function mostrarResult(result, resultadoA) {
                     plugins: {
                         legend: {
                             labels: {
-                                color: "#ffffff" 
+                                color: "#ffffff"
                             }
                         }
                     }
@@ -381,7 +483,15 @@ function mostrarResult(result, resultadoA) {
 
             });
 
+
+
+            const ciudad = `${result[resultadoA].name}`;
+            const textoResumen = generarResumenClima(clima, ciudad)
+            document.getElementById("texto-resumen").textContent = textoResumen
+            document.querySelector(".resumen-clima").style.display = "flex"
         })
+
+
 }
 
 // -------------------- titulos segun locacion --------------------
@@ -413,9 +523,9 @@ function renderTodo(lat, lon) {
 }
 
 function mostrarAviso(mensaje) {
-  const aviso = document.getElementById("aviso-ubicacion");
-  aviso.textContent = mensaje;
-  aviso.classList.remove("oculto");
+    const aviso = document.getElementById("aviso-ubicacion");
+    aviso.textContent = mensaje;
+    aviso.classList.remove("oculto");
 }
 
 
@@ -442,7 +552,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     );
 });
-inputB.addEventListener("keydown", busquedaApi);
+inputB.addEventListener("keyup", busquedaApi);
 
 
 
